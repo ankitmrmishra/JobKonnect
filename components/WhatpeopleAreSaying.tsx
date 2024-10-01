@@ -54,7 +54,7 @@ const WhatpeopleAreSaying = () => {
                 alt="profilePic"
                 width={40}
                 height={40}
-                className="border border-white/40 rounded-full md:size-10 size-7"
+                className="border border-white/40 rounded-full md:size-10 size-7 object-cover"
               />
               <div className="flex flex-col justify-start align-start items-start">
                 <span className="text-xs md:text-base px-1 flex justify-center align-middle items-center gap-1">
@@ -87,7 +87,7 @@ const WhatpeopleAreSaying = () => {
                 alt="profilePic"
                 width={40}
                 height={40}
-                className="border border-white/40 rounded-full md:size-10 size-7"
+                className="border border-white/40 rounded-full md:size-10 size-7 object-cover"
               />
               <div className="flex flex-col justify-start align-start items-start">
                 <span className="text-xs md:text-base px-1 flex justify-center align-middle items-center gap-1">
@@ -115,7 +115,8 @@ const testimonials: Testimonial[] = [
   {
     name: "Savannah Nguyen",
     username: "savannah",
-    image: "/placeholder.svg?height=80&width=80",
+    image:
+      "https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3387&q=80",
     quote:
       "Found my dream job within weeks. The platform's job matching algorithm is spot-on!",
     role: "Job Seeker",
@@ -123,7 +124,8 @@ const testimonials: Testimonial[] = [
   {
     name: "Marvin McKinney",
     username: "marvinmn",
-    image: "/placeholder.svg?height=80&width=80",
+    image:
+      "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YXZhdGFyfGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60",
     quote:
       "As an employer, I've never had an easier time finding qualified candidates. Excellent service!",
     role: "Employer",
@@ -131,7 +133,8 @@ const testimonials: Testimonial[] = [
   {
     name: "Dianne Russell",
     username: "diannerus",
-    image: "/placeholder.svg?height=80&width=80",
+    image:
+      "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8YXZhdGFyfGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60",
     quote:
       "The resume builder tool helped me create a standout application. I got hired in no time!",
     role: "Job Seeker",
@@ -139,7 +142,8 @@ const testimonials: Testimonial[] = [
   {
     name: "Ronald Richards",
     username: "ronaldric",
-    image: "/placeholder.svg?height=80&width=80",
+    image:
+      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGF2YXRhcnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60",
     quote:
       "Streamlined hiring process and top-notch candidate pool. Couldn't ask for more!",
     role: "Employer",
@@ -147,7 +151,8 @@ const testimonials: Testimonial[] = [
   {
     name: "Courtney Henry",
     username: "courtneyh",
-    image: "/placeholder.svg?height=80&width=80",
+    image:
+      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3540&q=80",
     quote:
       "The career advice section was a game-changer. It helped me pivot to a new industry successfully.",
     role: "Job Seeker",
@@ -155,7 +160,8 @@ const testimonials: Testimonial[] = [
   {
     name: "Arlene McCoy",
     username: "arlenemc",
-    image: "/placeholder.svg?height=80&width=80",
+    image:
+      "https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3534&q=80",
     quote:
       "Posting jobs and managing applications is a breeze. Highly recommend for all employers!",
     role: "Employer",
