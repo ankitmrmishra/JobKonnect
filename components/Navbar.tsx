@@ -2,7 +2,7 @@
 
 import { Workflow, Menu, X } from "lucide-react";
 import React, { useState } from "react";
-import { Button } from "@/components/ui/button";
+
 import Link from "next/link";
 import {
   LoginLink,
@@ -10,12 +10,12 @@ import {
   RegisterLink,
   useKindeBrowserClient,
 } from "@kinde-oss/kinde-auth-nextjs";
-import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+
 import Image from "next/image";
 
 export default function Navbar() {
   const { isAuthenticated } = useKindeBrowserClient();
-  const { user, getUser } = useKindeBrowserClient();
+  const { user } = useKindeBrowserClient();
   console.log(isAuthenticated, "this is testing");
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
