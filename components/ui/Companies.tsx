@@ -32,7 +32,7 @@ export default function TrustedByCompanies() {
   }, [containerWidth, controls]);
 
   return (
-    <div className="w-full  mx-auto text-black overflow-hidden">
+    <div className="md:w-1/2 w-full mx-auto text-black overflow-hidden">
       <h2 className="text-xl font-bold text-center py-10">
         Trusted by Leading Companies Worldwide
       </h2>

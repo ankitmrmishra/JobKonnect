@@ -1,6 +1,8 @@
+import Faq from "@/components/Faq";
 import FeatPortal from "@/components/featPortal";
 import Hero from "@/components/Hero";
 import TrustedByCompanies from "@/components/ui/Companies";
+import WhatpeopleAreSaying from "@/components/WhatpeopleAreSaying";
 
 export default function Home() {
   return (
@@ -10,6 +12,8 @@ export default function Home() {
         <TrustedByCompanies />
         <FeatPortal />
       </div>
+      <WhatpeopleAreSaying />
+      <Faq />
     </>
   );
 }
