@@ -2,36 +2,36 @@
 import { Goal } from "lucide-react";
 
 import React, { useState } from "react";
-import { Upload, Tag, Bell } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { Upload } from "lucide-react";
+import { motion } from "framer-motion";
 
 const FeatPortal = () => {
   const [resumeProgress, setResumeProgress] = useState(45);
-  const [highlightedCategory, setHighlightedCategory] = useState("Tech");
-  const [applicationCounts, setApplicationCounts] = useState({
-    "Pending Review": 3,
-    "Interviews Scheduled": 2,
-    "Offers Received": 1,
-  });
+  // const [highlightedCategory, setHighlightedCategory] = useState("Tech");
+  // const [applicationCounts, setApplicationCounts] = useState({
+  //   "Pending Review": 3,
+  //   "Interviews Scheduled": 2,
+  //   "Offers Received": 1,
+  // });
 
-  const categories = ["Tech", "Finance", "Marketing", "Design", "Sales"];
+  // const categories = ["Tech", "Finance", "Marketing", "Design", "Sales"];
 
-  const handleCategoryHover = () => {
-    const randomCategory =
-      categories[Math.floor(Math.random() * categories.length)];
-    setHighlightedCategory(randomCategory);
-  };
+  // const handleCategoryHover = () => {
+  //   const randomCategory =
+  //     categories[Math.floor(Math.random() * categories.length)];
+  //   setHighlightedCategory(randomCategory);
+  // };
 
-  const handleApplicationHover = () => {
-    const interval = setInterval(() => {
-      setApplicationCounts((prev) => ({
-        "Pending Review": Math.floor(Math.random() * 10),
-        "Interviews Scheduled": Math.floor(Math.random() * 5),
-        "Offers Received": Math.floor(Math.random() * 3),
-      }));
-    }, 100);
-    return () => clearInterval(interval);
-  };
+  // const handleApplicationHover = () => {
+  //   const interval = setInterval(() => {
+  //     setApplicationCounts((prev) => ({
+  //       "Pending Review": Math.floor(Math.random() * 10),
+  //       "Interviews Scheduled": Math.floor(Math.random() * 5),
+  //       "Offers Received": Math.floor(Math.random() * 3),
+  //     }));
+  //   }, 100);
+  //   return () => clearInterval(interval);
+  // };
   return (
     <div className="flex justify-center align-middle items-center flex-col py-16">
       <div className="badge bg-black max-w-max flex justify-center align-middle items-center text-white rounded-full px-2 py-[6px] text-xs gap-1">
