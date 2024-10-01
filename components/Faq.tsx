@@ -1,7 +1,7 @@
 "use client";
 import { ChevronDown } from "lucide-react";
 import React, { useState } from "react";
-import { Button } from "./ui/button";
+
 import { QuestionMarkIcon } from "@radix-ui/react-icons";
 
 const Faq = () => {

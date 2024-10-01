@@ -1,5 +1,5 @@
 "use client";
-import { SpeakerIcon, Speech, Verified } from "lucide-react";
+import { Speech, Verified } from "lucide-react";
 import Image from "next/image";
 import React, { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
@@ -44,7 +44,10 @@ const WhatpeopleAreSaying = () => {
         className="testimonial_row_1  flex relative overflow-hidden scrollbar-hide"
       >
         {testimonials.map((testi, index) => (
-          <div className="bg-black text-white  space-y-3 border border-red-500 md:p-4 p-2 md:m-4 m-2 rounded-2xl   md:w-[20rem] w-[12rem]  ">
+          <div
+            key={index}
+            className="bg-black text-white  space-y-3 border border-red-500 md:p-4 p-2 md:m-4 m-2 rounded-2xl   md:w-[20rem] w-[12rem]  "
+          >
             <div className="Profile flex justify-start align-middle items-center md:gap-3 gap-1">
               <Image
                 src={testi.image}
@@ -74,7 +77,10 @@ const WhatpeopleAreSaying = () => {
         className="testimonial_row_1  flex relative overflow-hidden scrollbar-hide"
       >
         {testimonials.map((testi, index) => (
-          <div className="bg-black text-white  space-y-3 border border-red-500 md:p-4 p-2 md:m-4 m-2 rounded-2xl   md:w-[20rem] w-[12rem]  ">
+          <div
+            key={index}
+            className="bg-black text-white  space-y-3 border border-red-500 md:p-4 p-2 md:m-4 m-2 rounded-2xl   md:w-[20rem] w-[12rem]  "
+          >
             <div className="Profile flex justify-start align-middle items-center md:gap-3 gap-1">
               <Image
                 src={testi.image}
