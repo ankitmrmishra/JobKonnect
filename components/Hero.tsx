@@ -25,7 +25,7 @@ export default function Hero() {
             Elevating Careers, Connecting Futures
           </h1>
           <p className="text-sm sm:text-base md:text-lg text-white/60 max-w-3xl mx-auto">
-            At JobConnect, we're not just another job board. We're your career
+            At JobConnect, we are not just another job board. We are your career
             catalyst, bringing together ambitious professionals and visionary
             companies to create perfect matches that drive success.
           </p>
