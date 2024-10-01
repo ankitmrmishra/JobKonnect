@@ -4,8 +4,20 @@ import { Workflow, Menu, X } from "lucide-react";
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import {
+  LoginLink,
+  LogoutLink,
+  RegisterLink,
+  useKindeBrowserClient,
+} from "@kinde-oss/kinde-auth-nextjs";
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import Image from "next/image";
 
 export default function Navbar() {
+  const { isAuthenticated } = useKindeBrowserClient();
+  const { user, getUser } = useKindeBrowserClient();
+  console.log(isAuthenticated, "this is testing");
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -26,10 +38,37 @@ export default function Navbar() {
             <NavItem href="/contact">Contact Us</NavItem>
             <NavItem href="/about">About</NavItem>
           </div>
-          <div className="hidden md:flex items-center space-x-2">
-            <Button variant="outline">Log In</Button>
-            <Button>Sign Up</Button>
+          <div className="hidden md:flex items-center space-x-2 ">
+            {isAuthenticated ? (
+              <LogoutLink className="bg-black text-white p-2 rounded-lg">
+                Log Out
+              </LogoutLink>
+            ) : (
+              <>
+                <LoginLink className="bg-black text-white p-2 rounded-lg">
+                  Sign In
+                </LoginLink>
+                <RegisterLink className="bg-black text-white p-2 rounded-lg">
+                  Sign Up
+                </RegisterLink>
+              </>
+            )}
+            {user && (
+              <div className="profile flex justify-center align-middle items-center gap-2 ">
+                <Image
+                  src={user.picture || "/path/to/default-image.jpg"}
+                  alt={user.given_name || "User"}
+                  width={100}
+                  height={100}
+                  className="rounded-full size-14"
+                />
+                <span>
+                  {user?.given_name} {user.family_name}
+                </span>
+              </div>
+            )}
           </div>
+
           <button className="md:hidden" onClick={toggleMenu}>
             {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
@@ -52,10 +91,14 @@ export default function Navbar() {
             </NavItem>
           </div>
           <div className="mt-4 flex flex-col space-y-2">
-            <Button variant="outline" className="w-full">
-              Log In
-            </Button>
-            <Button className="w-full">Sign Up</Button>
+            {isAuthenticated ? (
+              <LogoutLink>Log Out</LogoutLink>
+            ) : (
+              <>
+                <LoginLink>Sign In</LoginLink>
+                <RegisterLink>Sign Up</RegisterLink>
+              </>
+            )}
           </div>
         </div>
       )}
