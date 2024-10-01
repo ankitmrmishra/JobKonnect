@@ -93,13 +93,18 @@ export default function Navbar() {
               <X size={24} />
             ) : (
               <div className="flex justify-center align-middle items-center">
-                <Image
-                  src={user?.picture || "/path/to/default-image.jpg"}
-                  alt={user?.given_name || "User"}
-                  width={100}
-                  height={100}
-                  className="rounded-full size-6"
-                />
+                {user ? (
+                  <Image
+                    src={user?.picture || "/path/to/default-image.jpg"}
+                    alt={user?.given_name || "User"}
+                    width={100}
+                    height={100}
+                    className="rounded-full size-6"
+                  />
+                ) : (
+                  ""
+                )}
+
                 <Menu size={24} />
               </div>
             )}
