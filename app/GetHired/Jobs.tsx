@@ -12,7 +12,7 @@ const Jobs = ({ className }: { className: string }) => {
       )}
     >
       <div className="flex">
-        <span className="md:text-4xl text-2xl text-white ">3722 Jobs</span>
+        <span className="md:text-4xl text-2xl text-black ">3722 Jobs</span>
       </div>
 
       <div className="jobcards">
@@ -78,7 +78,7 @@ const JobCard: React.FC<JobCardProps> = ({
           <span className="md:text-2xl text-lg ">{companyName}</span>
         </div>
         <div className="md:text-4xl text-xl">{Jobprofile}</div>
-        <div className="flex md:gap-7 gap-3 text-gray-500">
+        <div className="flex md:gap-7 gap-3 text-gray-200">
           <span className="Location flex md:flex-row flex-col justify-center align-middle items-center gap-1  text-sm">
             <LocateIcon className="size-5 " /> {location}
           </span>
@@ -92,7 +92,7 @@ const JobCard: React.FC<JobCardProps> = ({
             <Calendar className="size-5" /> {postedTime}
           </span>
         </div>
-        <div className="text-gray-600 ">
+        <div className="text-gray-100 ">
           <p className="line-clamp-3">{description}</p>
         </div>
       </div>

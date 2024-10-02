@@ -29,7 +29,7 @@ const page = () => {
           </Button>
         </div>
       </div>
-      <div className="mainComponent bg-black rounded-t-lg md:grid grid-cols-5 flex flex-col w-full  md:items-start justify-center align-middle items-center">
+      <div className="mainComponent bg-gray-100 rounded-t-lg md:grid grid-cols-5 flex flex-col w-full  md:items-start justify-center align-middle items-center">
         <div className="col-span-1 flex p-4 gap-3 ">
           <Filters className="" />
         </div>
