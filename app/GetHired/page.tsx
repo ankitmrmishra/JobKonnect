@@ -36,7 +36,7 @@ const page = () => {
         <div className=" w-full p-10 col-span-3 flex  ">
           <Jobs className="" />
         </div>
-        <div className=" w-[17rem] md:py-24">
+        <div className=" w-[17rem] md:py-24 py-5">
           <HiringCTAs className="" />
         </div>
       </div>

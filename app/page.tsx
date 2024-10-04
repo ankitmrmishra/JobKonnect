@@ -1,3 +1,4 @@
+"use client";
 import Faq from "@/components/Faq";
 import FeatPortal from "@/components/featPortal";
 import Hero from "@/components/Hero";

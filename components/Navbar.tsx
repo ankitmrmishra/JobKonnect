@@ -20,11 +20,11 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import Image from "next/image";
+import { Button } from "./ui/button";
 
 export default function Navbar() {
   const { isAuthenticated } = useKindeBrowserClient();
   const { user } = useKindeBrowserClient();
-  console.log(isAuthenticated, "this is testing");
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -36,13 +36,18 @@ export default function Navbar() {
     <nav className=" p-4 md:px-36 md:mt-10">
       <div className="container mx-auto">
         <div className="flex justify-between items-center">
-          <div className="logo flex items-center text-xl md:text-2xl">
-            <Workflow className="text-blue-600 mr-2" /> Job
-            <span className="text-blue-600">Konnect</span>
+          <div className="">
+            <Link
+              href={"/"}
+              className="logo flex items-center text-xl md:text-2xl"
+            >
+              <Workflow className="text-blue-600 mr-2" /> Job
+              <span className="text-blue-600">Konnect</span>
+            </Link>
           </div>
           <div className="hidden md:flex justify-center items-center lg:space-x-4">
-            <NavItem href="/find-jobs">Find Jobs</NavItem>
-            <NavItem href="/hire-talent">Hire a Talent</NavItem>
+            <NavItem href="/GetHired">Find Jobs</NavItem>
+            <NavItem href="/PostAJob">Hire a Talent</NavItem>
             <NavItem href="/contact">Contact Us</NavItem>
             <NavItem href="/about">About</NavItem>
           </div>
@@ -72,7 +77,11 @@ export default function Navbar() {
                       <LogoutLink>Log Out </LogoutLink>
                     </DropdownMenuLabel>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem>Profile</DropdownMenuItem>
+                    <DropdownMenuItem>Profile</DropdownMenuItem>{" "}
+                    <DropdownMenuSeparator />
+                    <DropdownMenuLabel className="bg-blue-300 p-2 rounded-md outline outline-blue-400 ">
+                      <Link href={"/PostAJob"}>Post A Job</Link>
+                    </DropdownMenuLabel>
                   </DropdownMenuContent>
                 </DropdownMenu>
               </div>
@@ -88,24 +97,32 @@ export default function Navbar() {
             )}
           </div>
 
-          <button className="md:hidden" onClick={toggleMenu}>
+          <button className="md:hidden">
             {isMenuOpen ? (
-              <X size={24} />
+              <X size={24} onClick={toggleMenu} />
             ) : (
               <div className="flex justify-center align-middle items-center">
                 {user ? (
-                  <Image
-                    src={user?.picture || "/path/to/default-image.jpg"}
-                    alt={user?.given_name || "User"}
-                    width={100}
-                    height={100}
-                    className="rounded-full size-6"
-                  />
+                  <div className="flex gap-2">
+                    <Image
+                      src={user?.picture || "/path/to/default-image.jpg"}
+                      alt={user?.given_name || "User"}
+                      width={100}
+                      height={100}
+                      className="rounded-full size-6"
+                    />
+                    <Menu onClick={toggleMenu} size={24} />
+                  </div>
                 ) : (
-                  ""
+                  <div className="flex gap-3  rounded-md ">
+                    <div className=" text-white bg-black px-3 py-1 rounded-md ">
+                      <LoginLink>Sign In</LoginLink>
+                    </div>
+                    <div className=" text-white bg-black px-3 py-1 rounded-md ">
+                      <RegisterLink>Sign Up</RegisterLink>
+                    </div>
+                  </div>
                 )}
-
-                <Menu size={24} />
               </div>
             )}
           </button>
@@ -115,10 +132,10 @@ export default function Navbar() {
       {isMenuOpen && (
         <div className="md:hidden mt-4">
           <div className="flex flex-col space-y-2">
-            <NavItem href="/find-jobs" onClick={toggleMenu}>
+            <NavItem href="/GetHired" onClick={toggleMenu}>
               Find Jobs
             </NavItem>
-            <NavItem href="/hire-talent" onClick={toggleMenu}>
+            <NavItem href="/PostAJob" onClick={toggleMenu}>
               Hire a Talent
             </NavItem>
             <NavItem href="/contact" onClick={toggleMenu}>
@@ -130,16 +147,22 @@ export default function Navbar() {
           </div>
           <div className="mt-4 flex flex-col space-y-2">
             {isAuthenticated ? (
-              <div className="flex justify-center align-middle items-center gap-3 text-white">
-                <LogoutLink className="bg-black p-2 rounded-lg">
-                  Log Out
-                </LogoutLink>
-                <div className="bg-black p-2 rounded-lg">Profile</div>
+              <div className="flex gap-2">
+                <Button className="flex justify-center align-middle items-center gap-3 text-white min-w-[10rem]">
+                  <LogoutLink>Log Out</LogoutLink>
+                </Button>
+                <Button className="flex justify-center align-middle items-center gap-3 text-white min-w-[10rem]">
+                  Profile
+                </Button>
               </div>
             ) : (
               <>
-                <LoginLink>Sign In</LoginLink>
-                <RegisterLink>Sign Up</RegisterLink>
+                <Button className="flex justify-center align-middle items-center gap-3 text-white min-w-[10rem]">
+                  <LoginLink>Sign In</LoginLink>
+                </Button>
+                <Button className="flex justify-center align-middle items-center gap-3 text-white min-w-[10rem]">
+                  <RegisterLink>Sign Up</RegisterLink>
+                </Button>
               </>
             )}
           </div>

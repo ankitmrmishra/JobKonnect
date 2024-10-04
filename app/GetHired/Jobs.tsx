@@ -63,14 +63,14 @@ const JobCard: React.FC<JobCardProps> = ({
   //     day: "numeric",
   //   });
   return (
-    <div className="flex flex-col md:flex-row w-full bg-gray-900 text-white rounded-xl">
+    <div className="flex flex-col md:flex-row w-full bg-gray-200 text-black rounded-xl">
       <div className="image_section md:w-[15rem] w-[10rem] flex justify-start align-middle items-start p-4">
         <Image
           src={image}
           alt={companyName}
           width={100}
           height={100}
-          className=" bg-white p-1 rounded-md  md:size-15 size-10 "
+          className=" bg-black p-1 rounded-md  md:size-15 size-10 "
         />
       </div>
       <div className="detail_of_job flex justify-start align-middle items-start flex-col p-3 gap-2">
@@ -78,7 +78,7 @@ const JobCard: React.FC<JobCardProps> = ({
           <span className="md:text-2xl text-lg ">{companyName}</span>
         </div>
         <div className="md:text-4xl text-xl">{Jobprofile}</div>
-        <div className="flex md:gap-7 gap-3 text-gray-200">
+        <div className="flex md:gap-7 gap-3 text-black">
           <span className="Location flex md:flex-row flex-col justify-center align-middle items-center gap-1  text-sm">
             <LocateIcon className="size-5 " /> {location}
           </span>
@@ -92,7 +92,7 @@ const JobCard: React.FC<JobCardProps> = ({
             <Calendar className="size-5" /> {postedTime}
           </span>
         </div>
-        <div className="text-gray-100 ">
+        <div className="text-black">
           <p className="line-clamp-3">{description}</p>
         </div>
       </div>
