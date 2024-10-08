@@ -6,7 +6,7 @@ import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Job } from "../PostAJob/postpage";
 import { toast } from "sonner";
-import "./jobDetail.css";
+import "./JobStyle.css";
 type EmploymentType = "Fulltime" | "InternShip" | "ContractBasis";
 
 interface JobDetailProps {
