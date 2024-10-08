@@ -1,24 +1,33 @@
 "use client";
-import { LoginLink, useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
+import { useSession, signIn } from "next-auth/react";
 import React from "react";
 
 import Postpage from "./postpage";
+import JobPostSkeleton from "./PostPageSkeleton";
 
 const Page = () => {
-  const { isAuthenticated, isLoading } = useKindeBrowserClient();
+  const { data: session, status } = useSession();
 
-  if (isLoading) return <div>Is Loading </div>;
+  if (status === "loading")
+    return (
+      <div>
+        <JobPostSkeleton />
+      </div>
+    );
 
-  return isAuthenticated ? (
+  return session ? (
     <div className="">
-      <Postpage />{" "}
+      <Postpage />
     </div>
   ) : (
     <div className="w-full top-1/2 fixed left-[20%] text-6xl justify-center align-middle items-center gap-2">
       You have to{" "}
-      <LoginLink className="bg-black px-3 py-1 text-white rounded-md p-2 ">
+      <button
+        onClick={() => signIn()}
+        className="bg-black px-3 py-1 text-white rounded-md p-2"
+      >
         Sign In
-      </LoginLink>{" "}
+      </button>{" "}
       to see this page
     </div>
   );

@@ -2,14 +2,8 @@
 
 import { Workflow, Menu, X, MenuIcon } from "lucide-react";
 import React, { useState } from "react";
-
+import { signIn, signOut, useSession } from "next-auth/react";
 import Link from "next/link";
-import {
-  LoginLink,
-  LogoutLink,
-  RegisterLink,
-  useKindeBrowserClient,
-} from "@kinde-oss/kinde-auth-nextjs";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -23,9 +17,7 @@ import Image from "next/image";
 import { Button } from "./ui/button";
 
 export default function Navbar() {
-  const { isAuthenticated } = useKindeBrowserClient();
-  const { user } = useKindeBrowserClient();
-
+  const { data: session, status } = useSession();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -33,7 +25,7 @@ export default function Navbar() {
   };
 
   return (
-    <nav className=" p-4 md:px-36 md:mt-10">
+    <nav className="p-4 md:px-36 md:mt-10">
       <div className="container mx-auto">
         <div className="flex justify-between items-center">
           <div className="">
@@ -52,21 +44,18 @@ export default function Navbar() {
             <NavItem href="/about">About</NavItem>
           </div>
           <div className="hidden md:flex align-middle items-center space-x-2 ">
-            {user && (
+            {session?.user && (
               <div className="profile flex justify-center align-middle items-center gap-2 ">
                 <Image
-                  src={user.picture || "/path/to/default-image.jpg"}
-                  alt={user.given_name || "User"}
+                  src={session.user.image || "/path/to/default-image.jpg"}
+                  alt={session.user.name || "User"}
                   width={100}
                   height={100}
                   className="rounded-full size-10"
                 />
-                {/* <span>
-                  {user?.given_name} {user.family_name}
-                </span> */}
               </div>
             )}
-            {isAuthenticated ? (
+            {status === "authenticated" ? (
               <div className="">
                 <DropdownMenu>
                   <DropdownMenuTrigger>
@@ -74,10 +63,10 @@ export default function Navbar() {
                   </DropdownMenuTrigger>
                   <DropdownMenuContent>
                     <DropdownMenuLabel>
-                      <LogoutLink>Log Out </LogoutLink>
+                      <button onClick={() => signOut()}>Log Out</button>
                     </DropdownMenuLabel>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem>Profile</DropdownMenuItem>{" "}
+                    <DropdownMenuItem>Profile</DropdownMenuItem>
                     <DropdownMenuSeparator />
                     <DropdownMenuLabel className="bg-blue-300 p-2 rounded-md outline outline-blue-400 ">
                       <Link href={"/PostAJob"}>Post A Job</Link>
@@ -86,14 +75,7 @@ export default function Navbar() {
                 </DropdownMenu>
               </div>
             ) : (
-              <>
-                <LoginLink className="bg-black text-white p-2 rounded-lg">
-                  Sign In
-                </LoginLink>
-                <RegisterLink className="bg-black text-white p-2 rounded-lg">
-                  Sign Up
-                </RegisterLink>
-              </>
+              <Button onClick={() => signIn()}>Log In</Button>
             )}
           </div>
 
@@ -102,11 +84,11 @@ export default function Navbar() {
               <X size={24} onClick={toggleMenu} />
             ) : (
               <div className="flex justify-center align-middle items-center">
-                {user ? (
+                {session?.user ? (
                   <div className="flex gap-2">
                     <Image
-                      src={user?.picture || "/path/to/default-image.jpg"}
-                      alt={user?.given_name || "User"}
+                      src={session.user.image || "/path/to/default-image.jpg"}
+                      alt={session.user.name || "User"}
                       width={100}
                       height={100}
                       className="rounded-full size-6"
@@ -114,13 +96,13 @@ export default function Navbar() {
                     <Menu onClick={toggleMenu} size={24} />
                   </div>
                 ) : (
-                  <div className="flex gap-3  rounded-md ">
-                    <div className=" text-white bg-black px-3 py-1 rounded-md ">
-                      <LoginLink>Sign In</LoginLink>
-                    </div>
-                    <div className=" text-white bg-black px-3 py-1 rounded-md ">
-                      <RegisterLink>Sign Up</RegisterLink>
-                    </div>
+                  <div className="flex gap-3 rounded-md ">
+                    <Button
+                      onClick={() => signIn()}
+                      className="text-white bg-black px-3 py-1 rounded-md"
+                    >
+                      Sign In
+                    </Button>
                   </div>
                 )}
               </div>
@@ -146,24 +128,25 @@ export default function Navbar() {
             </NavItem>
           </div>
           <div className="mt-4 flex flex-col space-y-2">
-            {isAuthenticated ? (
+            {status === "authenticated" ? (
               <div className="flex gap-2">
-                <Button className="flex justify-center align-middle items-center gap-3 text-white min-w-[10rem]">
-                  <LogoutLink>Log Out</LogoutLink>
+                <Button
+                  onClick={() => signOut()}
+                  className="flex justify-center align-middle items-center gap-3 text-white min-w-[10rem]"
+                >
+                  Log Out
                 </Button>
                 <Button className="flex justify-center align-middle items-center gap-3 text-white min-w-[10rem]">
                   Profile
                 </Button>
               </div>
             ) : (
-              <>
-                <Button className="flex justify-center align-middle items-center gap-3 text-white min-w-[10rem]">
-                  <LoginLink>Sign In</LoginLink>
-                </Button>
-                <Button className="flex justify-center align-middle items-center gap-3 text-white min-w-[10rem]">
-                  <RegisterLink>Sign Up</RegisterLink>
-                </Button>
-              </>
+              <Button
+                onClick={() => signIn()}
+                className="flex justify-center align-middle items-center gap-3 text-white min-w-[10rem]"
+              >
+                Sign In
+              </Button>
             )}
           </div>
         </div>

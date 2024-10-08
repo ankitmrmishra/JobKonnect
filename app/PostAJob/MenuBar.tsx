@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Editor, EditorContent, useEditor } from "@tiptap/react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import Placeholder from "@tiptap/extension-placeholder";
 
 import {
   Bold,
@@ -215,13 +216,15 @@ interface RichTextEditorProps {
 }
 
 const RichTextEditor: React.FC<RichTextEditorProps> = ({ onChange }) => {
-  const [editorContent, setEditorContent] = useState<string>(
-    "<p>Hello, start writing about the job here...</p>"
-  );
+  const [editorContent, setEditorContent] = useState<string>();
 
   const editor = useEditor({
     extensions: [
       StarterKit,
+      Placeholder.configure({
+        placeholder: "Start writing about the Job details here ...",
+        emptyEditorClass: "is-editor-empty",
+      }),
       TextAlign.configure({
         types: ["heading", "paragraph"],
       }),
@@ -241,7 +244,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({ onChange }) => {
     editorProps: {
       attributes: {
         class:
-          "prose md:min-w-[900px] max-w-[900px] min-h-[300px] p-4 focus:outline-none [&_ol]:list-decimal [&_ul]:list-disc [&_h1]:text-3xl [&_h2]:text-2xl [&_h3]:text-xl",
+          "prose md:min-w-[900px] max-w-[900px] min-h-[300px] p-4 focus:outline-none [&_ol]:list-decimal [&_ul]:list-disc [&_h1]:text-5xl [&_h2]:text-2xl [&_h3]:text-xl",
       },
     },
   });
