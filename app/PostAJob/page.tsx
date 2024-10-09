@@ -1,11 +1,11 @@
 "use client";
 import { useSession, signIn } from "next-auth/react";
-import React, { useState } from "react";
+import React from "react";
 
-import Postpage, { Job } from "./postpage";
-import JobPostSkeleton from "./PostPageSkeleton";
+import Postpage from "./postpage";
+// import JobPostSkeleton from "./PostPageSkeleton";
 import { CustomSession } from "@/lib/auth";
-import CreateCompany, { CompanyData } from "./CreateCompany";
+import { CompanyData } from "./CreateCompany";
 export interface Com extends CompanyData {
   id: string;
 }
@@ -13,7 +13,7 @@ const Page = () => {
   const { data: session } = useSession() as {
     data: CustomSession | null;
   };
-  const [comapanies, setcompany] = useState<Com[]>([]);
+  // const [comapanies, setcompany] = useState<Com[]>([]);
 
   console.log(session, "this is postpage session");
   const fetchJobs = async () => {
