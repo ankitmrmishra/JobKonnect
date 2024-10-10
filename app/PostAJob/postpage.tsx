@@ -146,7 +146,7 @@ const Postpage: React.FC = () => {
   };
 
   return (
-    <div className="w-full md:grid grid-cols-6 h-[100vh] md:p-5 ">
+    <div className="w-full md:grid grid-cols-6 h-full md:p-5 ">
       <div className="postpage_dashboard col-span-1 rounded-s-md p-3 bg-gray-100 flex flex-col gap-3 ">
         <Button className="flex gap-2 bg-blue-600 outline outline-4 outline-blue-300 hover:bg-blue-700">
           Create a new Job <Plus className="size-4" />

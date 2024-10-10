@@ -63,7 +63,7 @@ const CreateCompany = () => {
     }
   };
   return (
-    <div>
+    <div className="max-w-max">
       <form onSubmit={handleSubmit}>
         <div className="inputs">
           <Label>Company Name</Label>
