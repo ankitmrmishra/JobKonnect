@@ -7,6 +7,7 @@ import Postpage from "./postpage";
 import { CustomSession } from "@/lib/auth";
 import CreateCompany, { CompanyData } from "./CreateCompany";
 import JobPostSkeleton from "./PostPageSkeleton";
+// import { company } from "@prisma/client";
 export interface Com extends CompanyData {
   id: string;
 }
@@ -35,7 +36,7 @@ const Page = () => {
       const data = await response.json();
       console.log(data.companies[0].id, "this is company ");
       const filteredJobs = data.companies.filter(
-        (job: any) => job.id === session?.user?.uid
+        (company: Com) => company.id === session?.user?.uid
       );
       setcompany(filteredJobs);
     } catch (error) {
