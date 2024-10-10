@@ -1,6 +1,6 @@
 "use client";
 import { useSession, signIn } from "next-auth/react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import Postpage from "./postpage";
 // import JobPostSkeleton from "./PostPageSkeleton";
@@ -15,25 +15,38 @@ const Page = () => {
     data: CustomSession | null;
   };
   const { status } = useSession();
-  // const [comapanies, setcompany] = useState<Com[]>([]);
+  const [comapanies, setcompany] = useState<Com[]>([]);
+  const [companyJustCreated, setCompanyJustCreated] = useState(false);
 
   console.log(session, "this is postpage session");
-  const fetchJobs = async () => {
+
+  useEffect(() => {
+    if (session?.user?.uid) {
+      fetchcompanies();
+    }
+  }, [session]);
+
+  const fetchcompanies = async () => {
     try {
       const response = await fetch("/api/companies");
       if (!response.ok) {
         throw new Error("Failed to fetch jobs");
       }
       const data = await response.json();
-      console.log(data, "this is company ");
-
-      console.log(data.jobs);
+      console.log(data.companies[0].id, "this is company ");
+      const filteredJobs = data.companies.filter(
+        (job: any) => job.id === session?.user?.uid
+      );
+      setcompany(filteredJobs);
     } catch (error) {
       console.error("Error fetching jobs:", error);
     }
   };
 
-  fetchJobs();
+  const handleCompanyCreated = () => {
+    setCompanyJustCreated(true);
+    fetchcompanies(); // Refetch companies after creation
+  };
 
   if (status === "loading")
     return (
@@ -44,8 +57,11 @@ const Page = () => {
 
   return session ? (
     <div className="flex flex-col gap-16">
-      <Postpage />
-      <CreateCompany />
+      {comapanies.length > 0 || companyJustCreated ? (
+        <Postpage />
+      ) : (
+        <CreateCompany handlecompanycreated={handleCompanyCreated} />
+      )}
     </div>
   ) : (
     <div className="w-full top-1/2 fixed left-[20%] text-6xl justify-center align-middle items-center gap-2">

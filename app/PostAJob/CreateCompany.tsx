@@ -8,7 +8,11 @@ export interface CompanyData {
   companyName: string;
   companyImage: string;
 }
-const CreateCompany = () => {
+const CreateCompany = ({
+  handlecompanycreated,
+}: {
+  handlecompanycreated: () => void;
+}) => {
   const [companyData, setcompanyData] = useState<CompanyData>({
     id: "",
     companyName: "",
@@ -41,6 +45,7 @@ const CreateCompany = () => {
             color: "white",
           },
         });
+        handlecompanycreated();
       }
       if (!response.ok) {
         throw new Error("Failed to create a company");
@@ -63,29 +68,42 @@ const CreateCompany = () => {
     }
   };
   return (
-    <div className="max-w-max">
-      <form onSubmit={handleSubmit}>
-        <div className="inputs">
-          <Label>Company Name</Label>
+    <div className=" p-5  flex flex-col justify-center align-middle items-center  gap-5">
+      <div className="p-1 text-3xl md:text-5xl font-semibold text-center">
+        Hey, Thank You for Choosing Job
+        <span className="text-blue-600">Konnect</span> for hiring the best
+        talents{" "}
+      </div>
+      <form
+        className="w-full h-full flex flex-col justify-center align-middle items-center"
+        onSubmit={handleSubmit}
+      >
+        <div className="inputs w-full md:max-w-max">
+          <Label className="text-black font-semibold text-2xl -tracking-tight">
+            Company Name
+          </Label>
           <Input
             name="companyName"
             value={companyData.companyName}
             placeholder="eg: Google"
-            className="text-black"
+            className="text-black w-[20rem]"
             onChange={handleInputChange}
           />
         </div>
-        <div className="inputs">
-          <Label>Company Logo</Label>
+        <div className="inputs w-full md:max-w-max">
+          <Label className="text-black font-semibold text-2xl -tracking-tight">
+            Company Logo
+          </Label>
           <Input
             name="companyImage"
             value={companyData.companyImage}
             onChange={handleInputChange}
-            className="text-black"
+            className="text-black w-[20rem]"
           />
         </div>
+
         <Button type="submit" className="mt-4">
-          Create Job
+          Create Company
         </Button>
       </form>
     </div>

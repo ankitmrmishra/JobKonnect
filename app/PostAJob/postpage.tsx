@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/select";
 import RichTextEditor from "./MenuBar";
 import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
+
 import { EmploymentType } from "@prisma/client";
 import { toast } from "sonner";
 import { useSession } from "next-auth/react";
@@ -148,9 +148,9 @@ const Postpage: React.FC = () => {
   return (
     <div className="w-full md:grid grid-cols-6 h-full md:p-5 ">
       <div className="postpage_dashboard col-span-1 rounded-s-md p-3 bg-gray-100 flex flex-col gap-3 ">
-        <Button className="flex gap-2 bg-blue-600 outline outline-4 outline-blue-300 hover:bg-blue-700">
+        {/* <Button className="flex gap-2 bg-blue-600 outline outline-4 outline-blue-300 hover:bg-blue-700">
           Create a new Job <Plus className="size-4" />
-        </Button>
+        </Button> */}
         <span className="main_text font-semibold">Your Job Posts</span>
         <div className="drafts_and_posted w-full">
           <Tabs defaultValue="Posted" className="w-full">
