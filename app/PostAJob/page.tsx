@@ -1,6 +1,6 @@
 "use client";
 import { useSession, signIn } from "next-auth/react";
-import React, { useState } from "react";
+import React from "react";
 
 import Postpage from "./postpage";
 // import JobPostSkeleton from "./PostPageSkeleton";
