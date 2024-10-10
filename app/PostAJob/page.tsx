@@ -15,7 +15,7 @@ const Page = () => {
     data: CustomSession | null;
   };
   const { status } = useSession();
-  const [comapanies, setcompany] = useState<Com[]>([]);
+  // const [comapanies, setcompany] = useState<Com[]>([]);
 
   console.log(session, "this is postpage session");
   const fetchJobs = async () => {
