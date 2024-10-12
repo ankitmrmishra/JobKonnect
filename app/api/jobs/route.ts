@@ -30,6 +30,7 @@ export async function POST(req: NextRequest) {
       salary,
       employmentType,
       detail,
+      companyName,
     } = data;
 
     if (
@@ -37,13 +38,18 @@ export async function POST(req: NextRequest) {
       !description ||
       !location ||
       !salary ||
-      !employmentType
+      !employmentType ||
+      !companyName
     ) {
       return NextResponse.json(
         { message: "All fields are required" },
         { status: 400 }
       );
     }
+
+    const existingCompany = await db.company.findUnique({
+      where: { companyName: companyName },
+    });
 
     const newJob = await db.jobDetail.create({
       data: {
@@ -53,7 +59,12 @@ export async function POST(req: NextRequest) {
         salary: parseFloat(salary),
         employmentType: employmentType as EmploymentType,
         detail: detail as string,
-        companyemailId: session.user.uid as string,
+        companyEmail: {
+          connect: { id: user.id },
+        },
+        companyName: {
+          connect: { companyName: existingCompany?.companyName }, // Connect to an existing company using its ID
+        },
       },
     });
 

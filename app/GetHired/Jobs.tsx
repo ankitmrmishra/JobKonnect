@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 
 import React, { useEffect, useState } from "react";
 import { Job } from "../PostAJob/postpage";
-import Link from "next/link";
+
 import JobListingCard from "./JobCard";
 
 const Jobs = ({ className }: { className: string }) => {
@@ -21,6 +21,8 @@ const Jobs = ({ className }: { className: string }) => {
         throw new Error("Failed to fetch jobs");
       }
       const data = await response.json();
+      console.log("this is data", data);
+
       setPostedJobs(data.jobs);
       setNumberofJobs(data.jobs.length);
     } catch (error) {
@@ -43,16 +45,15 @@ const Jobs = ({ className }: { className: string }) => {
       <div className="jobcards">
         {postedJobs.map((jobs, index) => (
           <div key={index} className="py-5">
-            <Link href={`/GetHired/${jobs.id}`}>
-              <JobListingCard
-                title={jobs.jobPosition}
-                description={jobs.description}
-                location={jobs.location}
-                salary={jobs.salary}
-                type={jobs.employmentType}
-                isNew={true}
-              />
-            </Link>
+            <JobListingCard
+              title={jobs.jobPosition}
+              description={jobs.description}
+              location={jobs.location}
+              salary={jobs.salary}
+              type={jobs.employmentType}
+              companyNew={jobs.companyId}
+              jobId={jobs.id}
+            />
           </div>
         ))}
       </div>

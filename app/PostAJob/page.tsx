@@ -18,7 +18,7 @@ const Page = () => {
   const { status } = useSession();
   const [comapanies, setcompany] = useState<Com[]>([]);
   const [companyJustCreated, setCompanyJustCreated] = useState(false);
-
+  const [companycreated, setcompanycreated] = useState<string>("");
   console.log(session, "this is postpage session");
 
   useEffect(() => {
@@ -38,7 +38,14 @@ const Page = () => {
       const filteredJobs = data.companies.filter(
         (company: Com) => company.id === session?.user?.uid
       );
-      setcompany(filteredJobs);
+
+      if (filteredJobs.length > 0) {
+        setcompany(filteredJobs);
+        setcompanycreated(filteredJobs[0].companyName);
+      } else {
+        console.log("No companies found for this user");
+        setcompanycreated(""); // or some default value
+      }
     } catch (error) {
       console.error("Error fetching jobs:", error);
     }
@@ -58,8 +65,8 @@ const Page = () => {
 
   return session ? (
     <div className="flex flex-col gap-16">
-      {comapanies.length > 0 || companyJustCreated ? (
-        <Postpage />
+      {comapanies.length > 0 || (companyJustCreated && companycreated) ? (
+        <Postpage companyName={companycreated} />
       ) : (
         <CreateCompany handlecompanycreated={handleCompanyCreated} />
       )}

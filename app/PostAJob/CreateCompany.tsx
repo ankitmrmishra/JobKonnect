@@ -3,10 +3,11 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import React, { useState } from "react";
 import { toast } from "sonner";
+import RichTextEditor from "./MenuBar";
 export interface CompanyData {
-  id: string;
   companyName: string;
   companyImage: string;
+  companyDetail: string;
 }
 const CreateCompany = ({
   handlecompanycreated,
@@ -14,9 +15,9 @@ const CreateCompany = ({
   handlecompanycreated: () => void;
 }) => {
   const [companyData, setcompanyData] = useState<CompanyData>({
-    id: "",
     companyName: "",
     companyImage: "",
+    companyDetail: "",
   });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -25,6 +26,10 @@ const CreateCompany = ({
       ...prev,
       [name]: value, // Dynamically update the corresponding field
     }));
+  };
+
+  const handleEditorChange = (content: string) => {
+    setcompanyData((prev) => ({ ...prev, companyDetail: content }));
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -101,7 +106,12 @@ const CreateCompany = ({
             className="text-black w-[20rem]"
           />
         </div>
-
+        <div className="">
+          <Label className="text-black font-semibold text-lg -tracking-tight">
+            Write In Detail About the Company
+          </Label>
+          <RichTextEditor onChange={handleEditorChange} />
+        </div>
         <Button type="submit" className="mt-4">
           Create Company
         </Button>

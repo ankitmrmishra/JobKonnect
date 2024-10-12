@@ -6,6 +6,7 @@
 
   generator client {
     provider = "prisma-client-js"
+    previewFeatures = ["fullTextSearch"]
   }
 
   datasource db {
@@ -35,22 +36,27 @@
 
   model company{
     id          String     @id @default(uuid())
-    companyName String
+    companyName String    @unique
     companyImage String
+    companyDetail String
 
+
+    Jobdetails   JobDetail[]
   }
 
 
   model JobDetail {
-    id              String   @id @default(uuid())
-    jobPosition     String
-    description     String
-    location        String
-    salary          Float
-    employmentType  EmploymentType  
-    detail          String?
-    timeOfPosting   DateTime @default(now())
-    companyemailId  String 
-    companyEmail    User  @relation(fields: [companyemailId], references: [id])
+    id                               String                        @id @default(uuid())
+    jobPosition                      String
+    description                      String
+    location                         String
+    salary                           Float
+    employmentType                   EmploymentType  
+    detail                           String?
+    timeOfPosting                    DateTime                      @default(now())
+    companyemailId                   String 
+    companyEmail                     User                          @relation(fields: [companyemailId], references: [id])
+    companyId                        String                        @unique
+    companyName                      company?                      @relation(fields: [companyId] , references: [companyName])
     
   }

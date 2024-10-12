@@ -28,13 +28,15 @@ export interface JobData {
   salary: number;
   employmentType: EmploymentType | "";
   detail: string;
+  companyName: string;
 }
 export interface Job extends JobData {
+  companyId: string;
   timeOfPosting: string | number | Date;
   id: string;
   companyemailId: string;
 }
-const Postpage: React.FC = () => {
+const Postpage = ({ companyName }: { companyName: string }) => {
   const [jobData, setJobData] = useState<JobData>({
     jobPosition: "",
     description: "",
@@ -43,6 +45,7 @@ const Postpage: React.FC = () => {
     salary: 0,
     employmentType: "",
     detail: "",
+    companyName: companyName,
   });
   const [editorKey, setEditorKey] = useState(0);
   const [postedJobs, setPostedJobs] = useState<Job[]>([]);
@@ -95,6 +98,24 @@ const Postpage: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (
+      !jobData.jobPosition ||
+      !jobData.description ||
+      !jobData.location ||
+      !jobData.employmentType ||
+      jobData.salary <= 0 ||
+      !jobData.companyName
+    ) {
+      toast.error("Please fill in all required fields", {
+        style: {
+          background: "red",
+          color: "white",
+        },
+      });
+      return;
+    }
+
     try {
       const response = await fetch("/api/jobs", {
         method: "POST",
@@ -119,9 +140,10 @@ const Postpage: React.FC = () => {
           salary: 0,
           employmentType: "",
           detail: "",
+          companyName: companyName,
         });
 
-        // Reset the RichTextEditor
+        // Reseting the RichTextEditor
         resetEditor();
       }
       if (!response.ok) {
@@ -130,7 +152,6 @@ const Postpage: React.FC = () => {
 
       const result = await response.json();
       console.log("Job created:", result);
-      // Handle successful job creation (e.g., show a success message, redirect, etc.)
     } catch (error) {
       console.error("Error creating job:", error);
       toast.error(
@@ -146,7 +167,7 @@ const Postpage: React.FC = () => {
   };
 
   return (
-    <div className="w-full md:grid grid-cols-6 h-full md:p-5 ">
+    <div className="w-full md:grid grid-cols-6 h-[100vh] md:p-5 ">
       <div className="postpage_dashboard col-span-1 rounded-s-md p-3 bg-gray-100 flex flex-col gap-3 ">
         {/* <Button className="flex gap-2 bg-blue-600 outline outline-4 outline-blue-300 hover:bg-blue-700">
           Create a new Job <Plus className="size-4" />
@@ -186,6 +207,18 @@ const Postpage: React.FC = () => {
         onSubmit={handleSubmit}
         className="postpage_editor_area col-span-4 rounded-r-md p-5 flex flex-col justify-start align-middle items-start gap-5"
       >
+        <div className="md:w-[40rem] w-full">
+          <Label className="text-black font-semibold text-lg -tracking-tight">
+            Company Name
+          </Label>
+          <Input
+            name="companyName"
+            value={companyName}
+            onChange={handleInputChange}
+            disabled={true}
+            className="text-black"
+          />
+        </div>
         <div className="md:w-[40rem] w-full">
           <Label className="text-black font-semibold text-lg -tracking-tight">
             Job Position

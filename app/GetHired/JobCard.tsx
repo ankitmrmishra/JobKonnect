@@ -2,6 +2,7 @@ import { Calendar, DollarSign, MapPin, Clock } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 interface JobListingCardProps {
   title: string;
@@ -9,7 +10,8 @@ interface JobListingCardProps {
   type: string;
   salary: number;
   description: string;
-  isNew?: boolean;
+  companyNew: string;
+  jobId: string;
 }
 
 export default function JobListingCard({
@@ -18,21 +20,23 @@ export default function JobListingCard({
   type,
   salary,
   description,
-  isNew = false,
+  companyNew,
+  jobId,
 }: JobListingCardProps) {
   return (
-    <Card className="max-w-md mx-auto">
+    <Card className="md:min-w-[50rem] min-w-[20rem] mx-auto">
       <CardHeader className="space-y-1">
         <div className="flex items-center justify-between">
-          {isNew && (
-            <Badge
-              variant="secondary"
-              className="text-sm font-medium bg-blue-600 text-white"
-            >
-              New
+          {companyNew && (
+            <Badge className="text-sm font-medium bg-transparent shadow-none text-gray-500">
+              {companyNew}
             </Badge>
           )}
-          <Button variant="ghost" size="icon" className="rounded-full ml-auto">
+          <Button
+            variant="ghost"
+            size="icon"
+            className="rounded-full ml-auto z-40"
+          >
             <Calendar className="h-4 w-4" />
             <span className="sr-only">Save job</span>
           </Button>
@@ -54,9 +58,11 @@ export default function JobListingCard({
             <span className="text-sm font-medium">{salary}</span>
           </div>
         </div>
-        <p className="text-sm text-muted-foreground">{description}</p>
+        <p className="text-sm text-muted-foreground py-3">{description}</p>
 
-        <Button className="w-full">Apply Now</Button>
+        <Link href={`/GetHired/${jobId}`} className="w-full">
+          <Button className="w-full"> Apply Now</Button>
+        </Link>
       </CardContent>
     </Card>
   );
