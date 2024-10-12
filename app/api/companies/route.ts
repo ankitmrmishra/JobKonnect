@@ -45,7 +45,7 @@ export async function POST(req: NextRequest) {
 
     const { companyName, companyImage, companyDetail } = Companydata;
 
-    if (!companyName || !companyImage || !companyDetail) {
+    if (!companyName || !companyDetail) {
       return NextResponse.json(
         { message: "All fields are required" },
         { status: 400 }

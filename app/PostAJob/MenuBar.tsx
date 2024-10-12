@@ -222,7 +222,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({ onChange }) => {
     extensions: [
       StarterKit,
       Placeholder.configure({
-        placeholder: "Start writing about the Job details here ...",
+        placeholder: "Start writing the details here ...",
         emptyEditorClass: "is-editor-empty",
       }),
       TextAlign.configure({

@@ -74,37 +74,39 @@ const CreateCompany = ({
   };
   return (
     <div className=" p-5  flex flex-col justify-center align-middle items-center  gap-5">
-      <div className="p-1 text-3xl md:text-5xl font-semibold text-center">
+      <div className="md:p-10 md:px-52 text-3xl md:text-5xl font-semibold text-center">
         Hey, Thank You for Choosing Job
         <span className="text-blue-600">Konnect</span> for hiring the best
         talents{" "}
       </div>
       <form
-        className="w-full h-full flex flex-col justify-center align-middle items-center"
+        className="w-full h-full flex flex-col justify-start  items-center gap-5"
         onSubmit={handleSubmit}
       >
-        <div className="inputs w-full md:max-w-max">
-          <Label className="text-black font-semibold text-2xl -tracking-tight">
-            Company Name
-          </Label>
-          <Input
-            name="companyName"
-            value={companyData.companyName}
-            placeholder="eg: Google"
-            className="text-black w-[20rem]"
-            onChange={handleInputChange}
-          />
-        </div>
-        <div className="inputs w-full md:max-w-max">
-          <Label className="text-black font-semibold text-2xl -tracking-tight">
-            Company Logo
-          </Label>
-          <Input
-            name="companyImage"
-            value={companyData.companyImage}
-            onChange={handleInputChange}
-            className="text-black w-[20rem]"
-          />
+        <div className="flex md:flex-row flex-col justify-start items-start align-middle gap-10 ">
+          <div className="inputs w-full md:max-w-max">
+            <Label className="text-black font-semibold text-2xl -tracking-tight">
+              Company Name
+            </Label>
+            <Input
+              name="companyName"
+              value={companyData.companyName}
+              placeholder="eg: Google"
+              className="text-black w-[20rem]"
+              onChange={handleInputChange}
+            />
+          </div>
+          {/* <div className="inputs w-full md:max-w-max">
+            <Label className="text-black font-semibold text-2xl -tracking-tight">
+              Company Logo
+            </Label>
+            <Input
+              name="companyImage"
+              value={companyData.companyImage}
+              onChange={handleInputChange}
+              className="text-black w-[20rem]"
+            />
+          </div> */}
         </div>
         <div className="">
           <Label className="text-black font-semibold text-lg -tracking-tight">
