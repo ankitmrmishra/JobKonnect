@@ -7,11 +7,12 @@ import { useEffect, useState } from "react";
 import { Job } from "../PostAJob/postpage";
 import { toast } from "sonner";
 import "./JobStyle.css";
+
 type EmploymentType = "Fulltime" | "InternShip" | "ContractBasis";
 
 interface JobDetailProps {
   id: string;
-
+  jobPosition: string;
   description: string;
   location: string;
   salary: number;
@@ -32,6 +33,7 @@ export default function Jobdetailcomp({
   detail,
   onApply,
   onSave,
+  jobPosition,
 }: JobDetailProps) {
   const { id } = useParams();
   const [job, setJob] = useState<Job | null>(null);
@@ -47,6 +49,8 @@ export default function Jobdetailcomp({
           throw new Error("Failed to fetch job");
         }
         const data = await response.json();
+        console.log("this is JobDetail job data", data);
+
         setJob(data);
       } catch (error) {
         console.error("Error fetching job:", error);
@@ -64,21 +68,11 @@ export default function Jobdetailcomp({
   return (
     <div className="max-w-4xl mx-auto p-6">
       <div className="flex items-center justify-between mb-6">
-        {/* <div className="flex items-center space-x-4">
-          <Avatar className="w-16 h-16">
-            <AvatarImage
-              src={companyEmail.profilePicture}
-              alt={companyEmail.username}
-            />
-            <AvatarFallback>
-              {companyEmail.username.slice(0, 2).toUpperCase()}
-            </AvatarFallback>
-          </Avatar>
-          <div>
-            <h1 className="text-2xl font-bold">{jobPosition}</h1>
-            <p className="text-gray-500">{companyEmail.username}</p>
-          </div>
-        </div> */}
+        <div className="flex items-center space-x-4">
+          <span className="md:text-4xl text-xl font-semibold">
+            {jobPosition}
+          </span>
+        </div>
         <Button onClick={onApply}>Apply Now</Button>
       </div>
 

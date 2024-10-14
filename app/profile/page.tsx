@@ -20,6 +20,8 @@ import {
   Save,
 } from "lucide-react";
 import { toast } from "sonner";
+import { signIn, useSession } from "next-auth/react";
+import ProfilePageSkeleton from "./ProfileSkeleton";
 
 interface ProfileData {
   id: string;
@@ -45,7 +47,7 @@ export default function ProfilePage() {
 
   useEffect(() => {
     fetchUserProfile();
-  }, []);
+  }, [user]);
 
   const fetchUserProfile = async () => {
     try {
@@ -111,7 +113,24 @@ export default function ProfilePage() {
     setEditedUser((prev) => (prev ? { ...prev, [name]: value } : null));
   };
 
-  if (!user) return <div>Loading...</div>;
+  const { status } = useSession();
+  if (status === "loading") {
+    return <ProfilePageSkeleton />;
+  }
+
+  if (!user)
+    return (
+      <div className="w-full top-1/2 fixed left-[20%] text-6xl justify-center align-middle items-center gap-2">
+        You have to{" "}
+        <button
+          onClick={() => signIn()}
+          className="bg-black px-3 py-1 text-white rounded-md p-2"
+        >
+          Sign In
+        </button>{" "}
+        to see this page
+      </div>
+    );
 
   return (
     <div className="min-h-screen bg-background">

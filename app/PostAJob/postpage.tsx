@@ -19,6 +19,16 @@ import { EmploymentType } from "@prisma/client";
 import { toast } from "sonner";
 import { useSession } from "next-auth/react";
 import { CustomSession } from "@/lib/auth";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+} from "@radix-ui/react-dropdown-menu";
+import { DashboardIcon, DotsVerticalIcon } from "@radix-ui/react-icons";
+import {
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+} from "@/components/ui/dropdown-menu";
 
 export interface JobData {
   jobPosition: string;
@@ -167,11 +177,8 @@ const Postpage = ({ companyName }: { companyName: string }) => {
   };
 
   return (
-    <div className="w-full md:grid grid-cols-6 h-[100vh] md:p-5 ">
-      <div className="postpage_dashboard col-span-1 rounded-s-md p-3 bg-gray-100 flex flex-col gap-3 ">
-        {/* <Button className="flex gap-2 bg-blue-600 outline outline-4 outline-blue-300 hover:bg-blue-700">
-          Create a new Job <Plus className="size-4" />
-        </Button> */}
+    <div className="w-full md:grid grid-cols-7 h-[100vh] md:p-5 ">
+      <div className="postpage_dashboard col-span-2 rounded-s-md p-3 bg-gray-100 flex flex-col gap-3 ">
         <span className="main_text font-semibold">Your Job Posts</span>
         <div className="drafts_and_posted w-full">
           <Tabs defaultValue="Posted" className="w-full">
@@ -181,18 +188,55 @@ const Postpage = ({ companyName }: { companyName: string }) => {
             </TabsList>
             <TabsContent value="Posted">
               {postedJobs.map((job) => (
-                <div key={job.id} className="mb-4 p-4 border rounded">
-                  <span>hello</span>
-                  <h3 className="font-bold">{job.jobPosition}</h3>
-                  <p>{job.description}</p>
-                  <p>
-                    Location: {job.location}, {job.country}
-                  </p>
-                  <p>Salary: ${job.salary} p.a.</p>
-                  <p>Type: {job.employmentType}</p>
-                  <p>
-                    Posted: {new Date(job.timeOfPosting).toLocaleDateString()}
-                  </p>
+                <div
+                  key={job.id}
+                  className="mb-4 p-4 border rounded bg-white text-black"
+                >
+                  <div className=" flex justify-between items-center align-middle">
+                    <h3 className="font-bold">{job.jobPosition}</h3>
+                    <div className="">
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button variant={"link"}>
+                            <DotsVerticalIcon />
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent>
+                          <DropdownMenuItem className="text-red-500 hover:bg-red-200 hover:cursor-pointer hover:text-red-700">
+                            Delete
+                          </DropdownMenuItem>
+                          <DropdownMenuSeparator />
+                          <DropdownMenuItem className="">
+                            Update
+                          </DropdownMenuItem>
+                          <DropdownMenuSeparator />
+                          <DropdownMenuItem className="bg-blue-100 flex gap-2">
+                            Dashboard <DashboardIcon className="size-4" />
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </div>
+                  </div>
+                  <div className="">
+                    {" "}
+                    <p className="text-sm text-black/65">{job.description}</p>
+                    <p className="">
+                      <span className="font-bold">Location:</span>{" "}
+                      {job.location}, {job.country}
+                    </p>
+                    <p>
+                      <span className="font-bold">Salary:</span> ${job.salary}{" "}
+                      p.a.
+                    </p>
+                    <p>
+                      <span className="font-bold">Type:</span>{" "}
+                      {job.employmentType}
+                    </p>
+                    <p>
+                      <span className="font-bold">Posted:</span>{" "}
+                      {new Date(job.timeOfPosting).toLocaleDateString()}
+                    </p>
+                  </div>
                 </div>
               ))}
             </TabsContent>
