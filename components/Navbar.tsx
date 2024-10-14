@@ -66,7 +66,10 @@ export default function Navbar() {
                       <button onClick={() => signOut()}>Log Out</button>
                     </DropdownMenuLabel>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem>Profile</DropdownMenuItem>
+                    <DropdownMenuItem>
+                      {" "}
+                      <Link href={"/profile"}>Profile</Link>
+                    </DropdownMenuItem>
                     <DropdownMenuSeparator />
                     <DropdownMenuLabel className="bg-blue-300 p-2 rounded-md outline outline-blue-400 ">
                       <Link href={"/PostAJob"}>Post A Job</Link>

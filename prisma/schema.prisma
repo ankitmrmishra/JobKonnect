@@ -1,62 +1,74 @@
-  // This is your Prisma schema file,
-  // learn more about it in the docs: https://pris.ly/d/prisma-schema
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-  // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-  // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
-  generator client {
-    provider = "prisma-client-js"
-    previewFeatures = ["fullTextSearch"]
-  }
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch"]
+}
 
-  datasource db {
-    provider = "postgresql"
-    url      = env("DATABASE_URL")
-  }
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
 
+enum EmploymentType {
+  Fulltime
+  InternShip
+  ContractBasis
+}
 
-  enum EmploymentType {
-    Fulltime 
-    InternShip
-    ContractBasis
-  }
-  enum Provider {
-    Google
-  }
+enum Provider {
+  Google
+}
 
-  model User {
-    id          String      @id @default(uuid())
-    sub         String      @default("")
-    username    String?      @unique
-    password    String?
-    profilePicture   String?
-    provider    Provider
-    jobs      JobDetail[]
-  }
+model User {
+  id             String      @id @default(uuid())
+  sub            String      @default("")
+  username       String?     @unique
+  password       String?
+  profilePicture String?
+  provider       Provider
+  jobs           JobDetail[]
+  profile        Profile?
+}
 
-  model company{
-    id          String     @id @default(uuid())
-    companyName String    @unique
-    companyImage String
-    companyDetail String
+model company {
+  id            String     @id @default(uuid())
+  companyName   String     @unique
+  companyImage  String
+  companyDetail String
+  Jobdetails    JobDetail[]
+}
 
+model JobDetail {
+  id             String         @id @default(uuid())
+  jobPosition    String
+  description    String
+  location       String
+  salary         Float
+  employmentType EmploymentType
+  detail         String?
+  timeOfPosting  DateTime       @default(now())
+  companyemailId String
+  companyEmail   User           @relation(fields: [companyemailId], references: [id])
+  companyId      String         @unique
+  companyName    company?       @relation(fields: [companyId], references: [companyName])
+}
 
-    Jobdetails   JobDetail[]
-  }
-
-
-  model JobDetail {
-    id                               String                        @id @default(uuid())
-    jobPosition                      String
-    description                      String
-    location                         String
-    salary                           Float
-    employmentType                   EmploymentType  
-    detail                           String?
-    timeOfPosting                    DateTime                      @default(now())
-    companyemailId                   String 
-    companyEmail                     User                          @relation(fields: [companyemailId], references: [id])
-    companyId                        String                        @unique
-    companyName                      company?                      @relation(fields: [companyId] , references: [companyName])
-    
-  }
+model Profile {
+  id                 String   @id @default(uuid())
+  user               User     @relation(fields: [id], references: [id])
+  name               String?
+  email              String?
+  phoneNumber        String?
+  location           String?
+  latestOrganization String?
+  YearOfExperience   String?
+  AboutMe            String?
+  Skill              String?
+  Education          String?
+  Achievements       String?
+}

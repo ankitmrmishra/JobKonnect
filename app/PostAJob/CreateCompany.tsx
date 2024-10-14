@@ -4,6 +4,7 @@ import { Label } from "@/components/ui/label";
 import React, { useState } from "react";
 import { toast } from "sonner";
 import RichTextEditor from "./MenuBar";
+
 export interface CompanyData {
   companyName: string;
   companyImage: string;
@@ -96,17 +97,6 @@ const CreateCompany = ({
               onChange={handleInputChange}
             />
           </div>
-          {/* <div className="inputs w-full md:max-w-max">
-            <Label className="text-black font-semibold text-2xl -tracking-tight">
-              Company Logo
-            </Label>
-            <Input
-              name="companyImage"
-              value={companyData.companyImage}
-              onChange={handleInputChange}
-              className="text-black w-[20rem]"
-            />
-          </div> */}
         </div>
         <div className="">
           <Label className="text-black font-semibold text-lg -tracking-tight">
