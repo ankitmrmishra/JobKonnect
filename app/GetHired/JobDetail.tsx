@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { Job } from "../PostAJob/postpage";
 import { toast } from "sonner";
 import "./JobStyle.css";
+import { DialogDemo } from "./ApplyDialog";
 
 type EmploymentType = "Fulltime" | "InternShip" | "ContractBasis";
 
@@ -112,9 +113,7 @@ export default function Jobdetailcomp({
         <Button variant="outline" onClick={onSave} className="w-full sm:w-auto">
           Save Job
         </Button>
-        <Button onClick={onApply} className="w-full sm:w-auto">
-          Apply Now
-        </Button>
+        <DialogDemo id={id} />
       </div>
     </div>
   );

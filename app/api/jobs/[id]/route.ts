@@ -84,3 +84,65 @@ export async function DELETE(
     );
   }
 }
+
+export async function POST(req: NextRequest) {
+  try {
+    const session = await getServerSession(authConfig);
+    if (!session?.user) {
+      return NextResponse.json(
+        { message: "You are not logged in" },
+        { status: 401 }
+      );
+    }
+    const user = await db.user.findUnique({
+      where: { username: session.user.email },
+    });
+
+    if (!user) {
+      return NextResponse.json({ message: "User not found" }, { status: 404 });
+    }
+
+    const data = await req.json();
+    const { name, phoneNumber, resumeLink, coverLetter } = data;
+
+    if (!name || !resumeLink || !coverLetter || !phoneNumber) {
+      return NextResponse.json(
+        { message: "All Fields Required" },
+        { status: 400 }
+      );
+    }
+    // const profile = await db.profile.findUnique({
+    //   where: { id: user.id },
+    //   include: {
+    //     JobApplications: true,
+    //   },
+    // });
+
+    const jobapplication = await db.jobApplication.create({
+      data: {
+        Profile: { connect: { id: user.id } },
+        name,
+        phoneNumber,
+        resumeLink,
+        coverLetter,
+      },
+    });
+
+    return NextResponse.json(
+      {
+        message: "Job Posted Succesfully",
+        jobapplication: jobapplication,
+      },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.error("Error in POST /api/profileApi:", error);
+    return NextResponse.json(
+      {
+        message: "Failed to update profile",
+        error: error instanceof Error ? error.message : String(error),
+      },
+      { status: 500 }
+    );
+  }
+}

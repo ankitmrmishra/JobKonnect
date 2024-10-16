@@ -71,4 +71,15 @@ model Profile {
   Skill              String?
   Education          String?
   Achievements       String?
+  JobApplications    JobApplication[]
+}
+
+
+model JobApplication{
+  id            String         @id @default(uuid())
+  name          String
+  phoneNumber   String
+  coverLetter   String
+  resumeLink    String
+  Profile     Profile?    @relation(fields: [id], references: [id])
 }
