@@ -29,6 +29,7 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
+import Link from "next/link";
 
 export interface JobData {
   jobPosition: string;
@@ -39,11 +40,12 @@ export interface JobData {
   employmentType: EmploymentType | "";
   detail: string;
   companyName: string;
+  id: string;
 }
 export interface Job extends JobData {
   companyId: string;
   timeOfPosting: string | number | Date;
-  id: string;
+
   companyemailId: string;
 }
 const Postpage = ({ companyName }: { companyName: string }) => {
@@ -56,6 +58,7 @@ const Postpage = ({ companyName }: { companyName: string }) => {
     employmentType: "",
     detail: "",
     companyName: companyName,
+    id: "",
   });
   const [editorKey, setEditorKey] = useState(0);
   const [postedJobs, setPostedJobs] = useState<Job[]>([]);
@@ -68,6 +71,8 @@ const Postpage = ({ companyName }: { companyName: string }) => {
   const fetchJobs = async () => {
     try {
       const response = await fetch("/api/jobs");
+      console.log(response, "this is response on 13:10");
+
       if (!response.ok) {
         throw new Error("Failed to fetch jobs");
       }
@@ -81,7 +86,10 @@ const Postpage = ({ companyName }: { companyName: string }) => {
       // Set the posted jobs to the filtered list
       setPostedJobs(filteredJobs);
 
-      console.log(data.jobs);
+      console.log(
+        data.jobs,
+        "this is data jobs and this is me testing the jobs"
+      );
     } catch (error) {
       console.error("Error fetching jobs:", error);
     }
@@ -151,6 +159,7 @@ const Postpage = ({ companyName }: { companyName: string }) => {
           employmentType: "",
           detail: "",
           companyName: companyName,
+          id: "",
         });
 
         // Reseting the RichTextEditor
@@ -166,6 +175,43 @@ const Postpage = ({ companyName }: { companyName: string }) => {
       console.error("Error creating job:", error);
       toast.error(
         error instanceof Error ? error.message : "Failed to create job",
+        {
+          style: {
+            background: "red",
+            color: "white",
+          },
+        }
+      );
+    }
+  };
+
+  const deletehandle = async (jobId: string) => {
+    try {
+      const response = await fetch(`/api/jobs/${jobId}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ jobId }),
+      });
+      console.log(response);
+      if (!response.ok) {
+        throw new Error("Failed to delete job");
+      }
+
+      toast.success("Job deleted successfully", {
+        style: {
+          background: "green",
+          color: "white",
+        },
+      });
+
+      // Optionally, refresh the list of posted jobs
+      fetchJobs();
+    } catch (error) {
+      console.error("Error DELETING this job:", error);
+      toast.error(
+        error instanceof Error ? error.message : "Failed to delete this job",
         {
           style: {
             background: "red",
@@ -202,7 +248,10 @@ const Postpage = ({ companyName }: { companyName: string }) => {
                           </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent>
-                          <DropdownMenuItem className="text-red-500 hover:bg-red-200 hover:cursor-pointer hover:text-red-700">
+                          <DropdownMenuItem
+                            onClick={() => deletehandle(job.id)}
+                            className="text-red-500 hover:bg-red-200 hover:cursor-pointer hover:text-red-700"
+                          >
                             Delete
                           </DropdownMenuItem>
                           <DropdownMenuSeparator />
@@ -211,7 +260,9 @@ const Postpage = ({ companyName }: { companyName: string }) => {
                           </DropdownMenuItem>
                           <DropdownMenuSeparator />
                           <DropdownMenuItem className="bg-blue-100 flex gap-2">
-                            Dashboard <DashboardIcon className="size-4" />
+                            <Link href={`/PostAJob/${job.id}`}>
+                              Dashboard <DashboardIcon className="size-4" />
+                            </Link>
                           </DropdownMenuItem>
                         </DropdownMenuContent>
                       </DropdownMenu>

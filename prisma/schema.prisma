@@ -54,7 +54,7 @@ model JobDetail {
   timeOfPosting  DateTime       @default(now())
   companyemailId String
   companyEmail   User           @relation(fields: [companyemailId], references: [id])
-  companyId      String         @unique
+  companyId      String         
   companyName    company?       @relation(fields: [companyId], references: [companyName])
 }
 
