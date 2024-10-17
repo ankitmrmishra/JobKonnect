@@ -19,6 +19,7 @@ interface JobDetailProps {
 async function getJobById(id: string): Promise<JobDetailProps | null> {
   try {
     const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
+    console.log("API URL:", baseUrl);
     const response = await fetch(`${baseUrl}/api/Dashboardjob/${id}`, {
       method: "GET",
       headers: headers(),
@@ -31,6 +32,8 @@ async function getJobById(id: string): Promise<JobDetailProps | null> {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     const job = await response.json();
+    console.log(job, "this is JOB");
+
     return job;
   } catch (error) {
     console.error("Error fetching job:", error);
@@ -43,22 +46,12 @@ export default async function JobDetailPage({
 }: {
   params: { id: string };
 }) {
-  try {
-    const job = await getJobById(params.id);
-    console.log(job);
+  const job = await getJobById(params.id);
+  console.log(job);
 
-    if (!job) {
-      notFound();
-    }
-
-    return <JobPostDashboard jobDetail={job} />;
-  } catch (error) {
-    console.error("Error in JobDetailPage:", error);
-
-    return (
-      <div className="error-container w-full h-full ">
-        <h1>Oops! Something went wrong.</h1>
-      </div>
-    );
+  if (!job) {
+    notFound();
   }
+
+  return <JobPostDashboard jobDetail={job} />;
 }
