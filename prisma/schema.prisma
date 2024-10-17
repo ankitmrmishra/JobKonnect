@@ -56,6 +56,7 @@ model JobDetail {
   companyEmail   User           @relation(fields: [companyemailId], references: [id])
   companyId      String         
   companyName    company?       @relation(fields: [companyId], references: [companyName])
+  Jobapplication JobApplication[]
 }
 
 model Profile {
@@ -71,7 +72,7 @@ model Profile {
   Skill              String?
   Education          String?
   Achievements       String?
-  JobApplications    JobApplication[]
+  JobApplications    JobApplication[] 
 }
 
 
@@ -81,5 +82,8 @@ model JobApplication{
   phoneNumber   String
   coverLetter   String
   resumeLink    String
-  Profile     Profile?    @relation(fields: [id], references: [id])
+  profileId     String
+  Profile       Profile    @relation(fields: [profileId], references: [id])
+  JobdetailId   String
+  JobDetail      JobDetail  @relation(fields: [JobdetailId], references: [id])
 }

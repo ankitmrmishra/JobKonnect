@@ -33,13 +33,17 @@ export function DialogDemo({ id }: { id: string | string[] }) {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const applicationWithJobId = {
+      ...applicationdata,
+      JobdetailId: id, // Add the JobdetailId to the request body
+    };
     try {
       const response = await fetch(`/api/jobs/${id}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(applicationdata),
+        body: JSON.stringify(applicationWithJobId),
       });
 
       if (!response.ok) {
@@ -48,6 +52,7 @@ export function DialogDemo({ id }: { id: string | string[] }) {
 
       const result = await response.json();
       console.log("Job created:", result);
+      toast.success("Job Created Succefully");
     } catch (error) {
       console.error("Error creating job:", error);
       toast.error(

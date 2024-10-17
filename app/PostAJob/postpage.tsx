@@ -259,8 +259,11 @@ const Postpage = ({ companyName }: { companyName: string }) => {
                             Update
                           </DropdownMenuItem>
                           <DropdownMenuSeparator />
-                          <DropdownMenuItem className="bg-blue-100 flex gap-2">
-                            <Link href={`/PostAJob/${job.id}`}>
+                          <DropdownMenuItem className="bg-blue-100 flex">
+                            <Link
+                              className="flex gap-2"
+                              href={`/PostAJob/${job.id}`}
+                            >
                               Dashboard <DashboardIcon className="size-4" />
                             </Link>
                           </DropdownMenuItem>

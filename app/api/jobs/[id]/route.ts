@@ -14,6 +14,9 @@ export async function GET(
   try {
     const job = await prisma.jobDetail.findUnique({
       where: { id: jobId },
+      include: {
+        Jobapplication: true,
+      },
     });
 
     if (!job) {
@@ -103,28 +106,41 @@ export async function POST(req: NextRequest) {
     }
 
     const data = await req.json();
-    const { name, phoneNumber, resumeLink, coverLetter } = data;
+    const { name, phoneNumber, resumeLink, coverLetter, JobdetailId } = data;
 
-    if (!name || !resumeLink || !coverLetter || !phoneNumber) {
+    if (!name || !resumeLink || !coverLetter || !phoneNumber || !JobdetailId) {
       return NextResponse.json(
         { message: "All Fields Required" },
         { status: 400 }
       );
     }
-    // const profile = await db.profile.findUnique({
-    //   where: { id: user.id },
-    //   include: {
-    //     JobApplications: true,
-    //   },
-    // });
+
+    const existingApplication = await db.jobApplication.findFirst({
+      where: {
+        Profile: { id: user.id },
+        JobDetail: { id: JobdetailId },
+      },
+    });
+
+    if (existingApplication) {
+      return NextResponse.json(
+        { message: "You have already applied for this job." },
+        { status: 409 } // Conflict status code
+      );
+    }
 
     const jobapplication = await db.jobApplication.create({
       data: {
         Profile: { connect: { id: user.id } },
+        JobDetail: { connect: { id: JobdetailId } },
         name,
         phoneNumber,
         resumeLink,
         coverLetter,
+      },
+      include: {
+        Profile: true,
+        JobDetail: true,
       },
     });
 
