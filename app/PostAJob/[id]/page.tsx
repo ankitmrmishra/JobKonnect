@@ -1,6 +1,5 @@
 import { notFound } from "next/navigation";
 import JobPostDashboard from "../JobDashboardpage";
-import { headers } from "next/headers";
 
 interface JobDetailProps {
   id: string;
