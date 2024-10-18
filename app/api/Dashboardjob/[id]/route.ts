@@ -14,13 +14,13 @@ export async function GET(
     const session = await getServerSession(authConfig);
     console.log("Session:", session);
 
-    if (!session?.user?.uid) {
-      console.log("User not authenticated");
-      return NextResponse.json(
-        { message: "Not authenticated" },
-        { status: 401 }
-      );
-    }
+    // if (!session?.user?.uid) {
+    //   console.log("User not authenticated");
+    //   return NextResponse.json(
+    //     { message: "Not authenticated" },
+    //     { status: 401 }
+    //   );
+    // }
 
     const job = await prisma.jobDetail.findUnique({
       where: { id: jobId },
@@ -34,13 +34,13 @@ export async function GET(
     }
 
     // Check if the authenticated user is the one who posted the job
-    if (session.user.uid !== job.companyemailId) {
-      console.log("User not authorized");
-      return NextResponse.json(
-        { message: "Not authorized to view this job" },
-        { status: 403 }
-      );
-    }
+    // if (session.user.uid !== job.companyemailId) {
+    //   console.log("User not authorized");
+    //   return NextResponse.json(
+    //     { message: "Not authorized to view this job" },
+    //     { status: 403 }
+    //   );
+    // }
 
     // If we reach here, the user is authorized to view the job
     return NextResponse.json(job);

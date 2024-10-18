@@ -21,8 +21,6 @@ async function getJobById(id: string): Promise<JobDetailProps | null> {
     const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
     console.log("API URL:", baseUrl);
     const response = await fetch(`${baseUrl}/api/Dashboardjob/${id}`, {
-      method: "GET",
-      headers: headers(),
       cache: "no-store",
     });
     if (response.status === 404) {
