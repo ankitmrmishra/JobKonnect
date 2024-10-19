@@ -84,6 +84,8 @@ export async function POST(req: NextRequest) {
   }
 }
 
+import { Prisma } from "@prisma/client";
+
 // app/api/jobs/route.ts
 export async function GET(req: NextRequest) {
   try {
@@ -94,11 +96,10 @@ export async function GET(req: NextRequest) {
     const location = searchParams.get("location");
     const salary = searchParams.get("salary");
     const datePosting = searchParams.get("date of posting");
-    const workExperience = searchParams.get("work experience");
     const employmentType = searchParams.get("type of employment");
 
-    // Build the where clause
-    const where: any = {};
+    // Define `where` using Prisma's type
+    const where: Prisma.JobDetailWhereInput = {};
 
     // Add search conditions
     if (searchQuery) {
@@ -115,7 +116,6 @@ export async function GET(req: NextRequest) {
     }
 
     if (salary) {
-      // Parse salary range
       const salaryMatch = salary.match(/>?\s*(\d+)k/);
       if (salaryMatch) {
         const salaryValue = parseInt(salaryMatch[1]) * 1000;
@@ -145,15 +145,13 @@ export async function GET(req: NextRequest) {
     }
 
     if (employmentType) {
-      where.employmentType = employmentType.toUpperCase();
+      where.employmentType = employmentType.toUpperCase() as EmploymentType;
     }
 
     // Fetch filtered jobs
     const jobs = await db.jobDetail.findMany({
       where,
-      orderBy: {
-        timeOfPosting: "desc",
-      },
+      orderBy: { timeOfPosting: "desc" },
     });
 
     return NextResponse.json({ jobs }, { status: 200 });

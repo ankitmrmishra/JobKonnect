@@ -61,7 +61,7 @@ const Jobs = ({ className, searchQuery, filters }: JobsProps) => {
     >
       <div className="flex">
         <span className="md:text-4xl text-2xl text-black">
-          {filteredJobs.length} Jobs
+          {filteredJobs.length || numberofJobs} Jobs
         </span>
       </div>
 

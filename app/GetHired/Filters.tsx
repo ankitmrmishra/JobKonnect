@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, Dispatch, SetStateAction } from "react";
+import React, { useState } from "react";
 import { cn } from "@/lib/utils";
 import { SlidersHorizontal, X } from "lucide-react";
 import { Label } from "@/components/ui/label";
