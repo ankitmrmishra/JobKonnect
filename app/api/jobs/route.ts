@@ -84,9 +84,73 @@ export async function POST(req: NextRequest) {
   }
 }
 
-export async function GET() {
+// app/api/jobs/route.ts
+export async function GET(req: NextRequest) {
   try {
+    const searchParams = new URL(req.url).searchParams;
+    const searchQuery = searchParams.get("search");
+
+    // Get filter parameters
+    const location = searchParams.get("location");
+    const salary = searchParams.get("salary");
+    const datePosting = searchParams.get("date of posting");
+    const workExperience = searchParams.get("work experience");
+    const employmentType = searchParams.get("type of employment");
+
+    // Build the where clause
+    const where: any = {};
+
+    // Add search conditions
+    if (searchQuery) {
+      where.OR = [
+        { jobPosition: { contains: searchQuery, mode: "insensitive" } },
+        { description: { contains: searchQuery, mode: "insensitive" } },
+        { location: { contains: searchQuery, mode: "insensitive" } },
+      ];
+    }
+
+    // Add filter conditions
+    if (location) {
+      where.location = location === "Remote job" ? "Remote" : "In-Office";
+    }
+
+    if (salary) {
+      // Parse salary range
+      const salaryMatch = salary.match(/>?\s*(\d+)k/);
+      if (salaryMatch) {
+        const salaryValue = parseInt(salaryMatch[1]) * 1000;
+        where.salary = { gte: salaryValue };
+      }
+    }
+
+    if (datePosting) {
+      const now = new Date();
+      switch (datePosting) {
+        case "Last 24 hours":
+          where.timeOfPosting = {
+            gte: new Date(now.getTime() - 24 * 60 * 60 * 1000),
+          };
+          break;
+        case "Last 3 days":
+          where.timeOfPosting = {
+            gte: new Date(now.getTime() - 3 * 24 * 60 * 60 * 1000),
+          };
+          break;
+        case "Last 7 days":
+          where.timeOfPosting = {
+            gte: new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000),
+          };
+          break;
+      }
+    }
+
+    if (employmentType) {
+      where.employmentType = employmentType.toUpperCase();
+    }
+
+    // Fetch filtered jobs
     const jobs = await db.jobDetail.findMany({
+      where,
       orderBy: {
         timeOfPosting: "desc",
       },

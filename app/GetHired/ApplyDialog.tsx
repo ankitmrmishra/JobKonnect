@@ -47,16 +47,16 @@ export function DialogDemo({ id }: { id: string | string[] }) {
       });
 
       if (!response.ok) {
-        throw new Error("Failed to create job");
+        throw new Error("Failed to Apply job");
       }
 
       const result = await response.json();
       console.log("Job created:", result);
-      toast.success("Job Created Succefully");
+      toast.success("Job Applied Succefully");
     } catch (error) {
       console.error("Error creating job:", error);
       toast.error(
-        error instanceof Error ? error.message : "Failed to create job",
+        error instanceof Error ? error.message : "Failed to Apply to the job",
         {
           style: {
             background: "red",

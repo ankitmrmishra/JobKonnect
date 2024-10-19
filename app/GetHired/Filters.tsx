@@ -1,10 +1,9 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, Dispatch, SetStateAction } from "react";
 import { cn } from "@/lib/utils";
 import { SlidersHorizontal, X } from "lucide-react";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-
 import { Button } from "@/components/ui/button";
 
 interface FilterOption {
@@ -15,6 +14,18 @@ interface FilterOption {
 
 interface FilterData {
   jobFilters: FilterOption[];
+}
+
+interface FilterGroupProps {
+  category: string;
+  options: string[];
+  selectedOption: string | null;
+  onOptionChange: (category: string, option: string) => void;
+}
+
+interface FiltersProps {
+  className?: string;
+  onFilterChange?: (filters: Record<string, string | null>) => void;
 }
 
 const filterData: FilterData = {
@@ -43,20 +54,13 @@ const filterData: FilterData = {
   ],
 };
 
-interface FilterGroupProps {
-  category: string;
-  options: string[];
-  selectedOption: string | null;
-  onOptionChange: (category: string, option: string) => void;
-}
-
 const FilterGroup: React.FC<FilterGroupProps> = ({
   category,
   options,
   selectedOption,
   onOptionChange,
 }) => (
-  <div className="flex flex-col gap-3 ">
+  <div className="flex flex-col gap-3">
     <span className="font-semibold text-blue-600">{category}</span>
     <RadioGroup
       value={selectedOption || undefined}
@@ -72,7 +76,7 @@ const FilterGroup: React.FC<FilterGroupProps> = ({
               id={id}
               className={cn(
                 isSelected &&
-                  " text-blue-600 border-blue-600 ring-offset-blue-300 ring-blue-500"
+                  "text-blue-600 border-blue-600 ring-offset-blue-300 ring-blue-500"
               )}
             />
             <Label
@@ -91,28 +95,26 @@ const FilterGroup: React.FC<FilterGroupProps> = ({
   </div>
 );
 
-interface FiltersProps {
-  className?: string;
-}
-
-const Filters: React.FC<FiltersProps> = ({ className }) => {
+const Filters: React.FC<FiltersProps> = ({ className, onFilterChange }) => {
   const [selectedOptions, setSelectedOptions] = useState<
     Record<string, string | null>
   >({});
+  const [open, setOpen] = useState(false);
 
-  const [open, setopen] = useState(false);
   const toggleMenu = () => {
-    setopen(!open);
+    setOpen(!open);
   };
 
   const handleOptionChange = (category: string, option: string) => {
-    setSelectedOptions((prev) => ({ ...prev, [category]: option }));
+    const newFilters = { ...selectedOptions, [category]: option };
+    setSelectedOptions(newFilters);
+    onFilterChange?.(newFilters);
   };
 
   return (
     <div
       className={cn(
-        "md:w-full w-[20rem] max-h-max md:bg-white  rounded-xl p-2",
+        "md:w-full w-[20rem] max-h-max md:bg-white rounded-xl p-2",
         className
       )}
     >
@@ -132,18 +134,16 @@ const Filters: React.FC<FiltersProps> = ({ className }) => {
       </div>
 
       {open ? (
-        <div className="md:hidden block p-4 bg-white rounded-lg ">
-          {" "}
+        <div className="md:hidden block p-4 bg-white rounded-lg">
           <div
-            className=" font-semibold flex justify-end align-middle items-cend gap-2 bg-transparent text-black shadow-none"
+            className="font-semibold flex justify-end align-middle items-center gap-2 bg-transparent text-black shadow-none"
             onClick={toggleMenu}
           >
-            <X className="size-4 " />
+            <X className="size-4" />
           </div>
           {filterData.jobFilters.map((filter, index) => (
             <div key={index} className="rounded-xl">
               <FilterGroup
-                key={index}
                 category={filter.category}
                 options={filter.options}
                 selectedOption={selectedOptions[filter.category] || null}

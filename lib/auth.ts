@@ -102,6 +102,25 @@ export const authConfig = {
             },
           });
           console.log("SignIn callback - New user created:", userDb);
+
+          // Automatically create a new profile for the user
+          await db.profile.create({
+            data: {
+              user: { connect: { id: userDb.id } },
+              phoneNumber: "",
+              location: "",
+              latestOrganization: "",
+              YearOfExperience: "",
+              AboutMe: "",
+              Skill: "",
+              Education: "",
+              Achievements: "",
+            },
+          });
+          console.log(
+            "SignIn callback - New profile created for user:",
+            userDb.id
+          );
         }
 
         return true; // Sign in successful

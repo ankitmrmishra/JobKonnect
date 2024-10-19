@@ -1,3 +1,4 @@
+"use client";
 import { notFound } from "next/navigation";
 import JobPostDashboard from "../JobDashboardpage";
 
@@ -15,11 +16,12 @@ interface JobDetailProps {
   companyName?: string;
 }
 
-async function getJobById(id: string): Promise<JobDetailProps | null> {
+async function getJobDashboardById(id: string): Promise<JobDetailProps | null> {
+  // const { data: session } = useSession() as { data: CustomSession | null };
   try {
     const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
     console.log("API URL:", baseUrl);
-    const response = await fetch(`${baseUrl}/api/Dashboardjob/${id}`, {
+    const response = await fetch(`${baseUrl}/api/jobs/${id}`, {
       cache: "no-store",
     });
     if (response.status === 404) {
@@ -30,7 +32,11 @@ async function getJobById(id: string): Promise<JobDetailProps | null> {
     }
     const job = await response.json();
     console.log(job, "this is JOB");
-
+    // if (job.companyemailId === session?.user?.uid) {
+    //   return job;
+    // } else {
+    //   return null;
+    // }
     return job;
   } catch (error) {
     console.error("Error fetching job:", error);
@@ -43,7 +49,7 @@ export default async function JobDetailPage({
 }: {
   params: { id: string };
 }) {
-  const job = await getJobById(params.id);
+  const job = await getJobDashboardById(params.id);
   console.log(job);
 
   if (!job) {

@@ -139,9 +139,11 @@ export default function Navbar() {
                 >
                   Log Out
                 </Button>
-                <Button className="flex justify-center align-middle items-center gap-3 text-white min-w-[10rem]">
-                  Profile
-                </Button>
+                <Link href={"/profile"}>
+                  <Button className="flex justify-center align-middle items-center gap-3 text-white min-w-[10rem]">
+                    Profile
+                  </Button>{" "}
+                </Link>
               </div>
             ) : (
               <Button

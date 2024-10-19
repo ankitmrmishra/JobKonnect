@@ -67,10 +67,6 @@ export async function POST(req: NextRequest) {
       include: { profile: true },
     });
 
-    if (!user) {
-      return NextResponse.json({ message: "User not found" }, { status: 404 });
-    }
-
     const profileData = await req.json();
     const {
       phoneNumber,
@@ -84,6 +80,10 @@ export async function POST(req: NextRequest) {
     } = profileData;
 
     let updatedProfile;
+
+    if (!user) {
+      return NextResponse.json({ message: "User not found" }, { status: 404 });
+    }
 
     if (user.profile) {
       // Update existing profile
