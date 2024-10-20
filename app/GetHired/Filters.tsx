@@ -28,28 +28,40 @@ interface FiltersProps {
   onFilterChange?: (filters: Record<string, string | null>) => void;
 }
 
+// Updated to match JobDetail model
 const filterData: FilterData = {
   jobFilters: [
     {
+      category: "Employment Type",
+      options: [
+        "FULL_TIME",
+        "PART_TIME",
+        "CONTRACT",
+        "INTERNSHIP",
+        "TEMPORARY",
+      ],
+    },
+    {
       category: "Location",
-      options: ["In-Office", "Remote job"],
+      options: ["REMOTE", "ON_SITE", "HYBRID"],
     },
     {
-      category: "Salary",
-      options: ["Hourly", "Monthly", "Yearly"],
-      ranges: ["Any", "> 30000k", "> 50000k", "> 80000k", "> 100000k"],
+      category: "Salary Range",
+      options: [
+        "< $50k",
+        "$50k - $80k",
+        "$80k - $100k",
+        "$100k - $150k",
+        "> $150k",
+      ],
     },
     {
-      category: "Date of posting",
-      options: ["All time", "Last 24 hours", "Last 3 days", "Last 7 days"],
+      category: "Posted Within",
+      options: ["Last 24 hours", "Last week", "Last month", "Any time"],
     },
     {
-      category: "Work experience",
-      options: ["Any experience", "Internship", "Work remotely"],
-    },
-    {
-      category: "Type of employment",
-      options: ["Full-time", "Temporary", "Part-time"],
+      category: "Company Type",
+      options: ["Startup", "Enterprise", "Agency", "Consulting"],
     },
   ],
 };
@@ -60,7 +72,7 @@ const FilterGroup: React.FC<FilterGroupProps> = ({
   selectedOption,
   onOptionChange,
 }) => (
-  <div className="flex flex-col gap-3">
+  <div className="flex flex-col gap-3 mt-4">
     <span className="font-semibold text-blue-600">{category}</span>
     <RadioGroup
       value={selectedOption || undefined}
@@ -111,17 +123,32 @@ const Filters: React.FC<FiltersProps> = ({ className, onFilterChange }) => {
     onFilterChange?.(newFilters);
   };
 
+  const handleClearFilters = () => {
+    setSelectedOptions({});
+    onFilterChange?.({});
+  };
+
   return (
     <div
       className={cn(
-        "md:w-full w-[20rem] max-h-max md:bg-white rounded-xl p-2",
+        "md:w-full w-[20rem] max-h-max md:bg-white rounded-xl p-2 shadow-sm",
         className
       )}
     >
       <div className="hidden md:block p-4">
-        <h1 className="font-semibold flex justify-start align-middle items-center gap-2">
-          Filters <SlidersHorizontal className="size-4" />
-        </h1>
+        <div className="flex justify-between items-center mb-4">
+          <h1 className="font-semibold flex items-center gap-2">
+            Filters <SlidersHorizontal className="size-4" />
+          </h1>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={handleClearFilters}
+            className="text-gray-500 hover:text-gray-700"
+          >
+            Clear all
+          </Button>
+        </div>
         {filterData.jobFilters.map((filter, index) => (
           <FilterGroup
             key={index}
@@ -135,11 +162,16 @@ const Filters: React.FC<FiltersProps> = ({ className, onFilterChange }) => {
 
       {open ? (
         <div className="md:hidden block p-4 bg-white rounded-lg">
-          <div
-            className="font-semibold flex justify-end align-middle items-center gap-2 bg-transparent text-black shadow-none"
-            onClick={toggleMenu}
-          >
-            <X className="size-4" />
+          <div className="flex justify-between items-center mb-4">
+            <h1 className="font-semibold">Filters</h1>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={toggleMenu}
+              className="text-gray-500 hover:text-gray-700"
+            >
+              <X className="size-4" />
+            </Button>
           </div>
           {filterData.jobFilters.map((filter, index) => (
             <div key={index} className="rounded-xl">
@@ -154,7 +186,7 @@ const Filters: React.FC<FiltersProps> = ({ className, onFilterChange }) => {
         </div>
       ) : (
         <Button
-          className="md:hidden font-semibold flex justify-start align-middle items-center gap-2 bg-white text-black"
+          className="md:hidden flex items-center gap-2 bg-white text-black hover:bg-gray-100"
           onClick={toggleMenu}
         >
           Filters <SlidersHorizontal className="size-4" />

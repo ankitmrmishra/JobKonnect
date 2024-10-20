@@ -4,6 +4,8 @@ import { NextRequest, NextResponse } from "next/server";
 import db from "@/app/db";
 import { EmploymentType } from "@prisma/client";
 
+import { Prisma } from "@prisma/client";
+
 export async function POST(req: NextRequest) {
   try {
     const session = await getServerSession(authConfig);
@@ -83,8 +85,6 @@ export async function POST(req: NextRequest) {
     );
   }
 }
-
-import { Prisma } from "@prisma/client";
 
 // app/api/jobs/route.ts
 export async function GET(req: NextRequest) {
