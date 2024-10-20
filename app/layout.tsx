@@ -24,11 +24,11 @@ export const metadata: Metadata = {
     title: "JobKonnect - Connect with Your Dream Career",
     description:
       "Find your next career opportunity with JobKonnect, the innovative job board platform.",
-    url: "https://jobkonnect.com",
+    url: "https://jobkonnect.vercel.app",
     siteName: "JobKonnect",
     images: [
       {
-        url: "https://jobkonnect.com/opengraph-image.png",
+        url: "https://jobkonnect.vercel.app/opengraph-image.png",
         width: 1200,
         height: 630,
       },
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     title: "JobKonnect - Connect with Your Dream Career",
     description:
       "Find your next career opportunity with JobKonnect, the innovative job board platform.",
-    images: ["https://jobkonnect.com/opengraph-image.png"],
+    images: ["https://jobkonnect.vercel.app/opengraph-image.png"],
   },
 };
 
