@@ -1,7 +1,8 @@
 import React from "react";
 import People from "@/components/ui/people";
 import { ArrowRight, Circle } from "lucide-react";
-import { Button } from "@/components/ui/button";
+// import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export default function Hero() {
   return (
@@ -32,15 +33,18 @@ export default function Hero() {
         </div>
 
         <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
-          <Button
-            variant="outline"
-            className="w-full sm:w-auto bg-white text-black hover:bg-white/90"
+          <Link
+            href={"/GetHired"}
+            className="w-full sm:w-auto bg-white text-black hover:bg-white/90 px-4 py-2 rounded-md"
           >
             Get Started
-          </Button>
-          <Button variant="link" className="text-white w-full sm:w-auto">
+          </Link>
+          <Link
+            href={"PostAJob"}
+            className="text-white w-full sm:w-auto flex justify-between align-middle items-center hover:underline"
+          >
             Hire <ArrowRight className="w-4 h-4 ml-1" />
-          </Button>
+          </Link>
         </div>
       </div>
     </div>

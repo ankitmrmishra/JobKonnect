@@ -72,7 +72,7 @@ const Page = () => {
       )}
     </div>
   ) : (
-    <div className="w-full top-1/2 fixed left-[20%] text-6xl justify-center align-middle items-center gap-2">
+    <div className="w-full top-1/2 flex p-44 left-[20%] text-6xl justify-center align-middle items-center gap-2">
       You have to{" "}
       <button
         onClick={() => signIn()}

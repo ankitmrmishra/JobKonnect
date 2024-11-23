@@ -2,8 +2,10 @@
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-
+import Ankit from "../../public/Ankit.jpg";
+import Anmol from "../../public/Anmol.jpg";
 import { Button } from "@/components/ui/button";
+import Image, { StaticImageData } from "next/image";
 
 export default function AboutUs() {
   const [isVisible, setIsVisible] = useState(false);
@@ -27,26 +29,22 @@ export default function AboutUs() {
     },
   };
 
-  const teamMembers = [
+  interface TeamMembersInterface {
+    name: string;
+    role: string;
+    image: string | StaticImageData;
+  }
+
+  const teamMembers: TeamMembersInterface[] = [
     {
-      name: "Jane Doe",
-      role: "CEO & Founder",
-      image: "/placeholder.svg?height=200&width=200",
+      name: "Anmol Sinha",
+      role: "CEO & Co-Founder",
+      image: Anmol,
     },
     {
-      name: "John Smith",
-      role: "CTO",
-      image: "/placeholder.svg?height=200&width=200",
-    },
-    {
-      name: "Alice Johnson",
-      role: "Head of HR",
-      image: "/placeholder.svg?height=200&width=200",
-    },
-    {
-      name: "Bob Williams",
-      role: "Lead Developer",
-      image: "/placeholder.svg?height=200&width=200",
+      name: "Ankit Mishra",
+      role: "CTO & Co-Founder",
+      image: Ankit,
     },
   ];
 
@@ -124,7 +122,7 @@ export default function AboutUs() {
 
         <motion.section variants={fadeIn} className="space-y-12">
           <h2 className="text-3xl font-semibold text-center">Meet Our Team</h2>
-          <div className="grid md:grid-cols-4 gap-8">
+          <div className="flex justify-center align-middle items-center gap-3">
             {teamMembers.map((member, index) => (
               <motion.div
                 key={index}
@@ -132,12 +130,10 @@ export default function AboutUs() {
                 className="text-center space-y-4"
               >
                 <div className="relative w-48 h-48 mx-auto overflow-hidden rounded-full">
-                  <motion.img
+                  <Image
                     src={member.image}
                     alt={member.name}
                     className="object-cover w-full h-full"
-                    whileHover={{ scale: 1.1 }}
-                    transition={{ duration: 0.3 }}
                   />
                 </div>
                 <h3 className="text-xl font-semibold">{member.name}</h3>
