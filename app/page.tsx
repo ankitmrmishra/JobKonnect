@@ -1,6 +1,7 @@
 "use client";
 import Faq from "@/components/Faq";
 import FeatPortal from "@/components/featPortal";
+import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
 import TrustedByCompanies from "@/components/ui/Companies";
 import WhatpeopleAreSaying from "@/components/WhatpeopleAreSaying";
@@ -18,6 +19,7 @@ export default function Home() {
       </div>
       <WhatpeopleAreSaying />
       <Faq />
+      <Footer />
     </>
   );
 }

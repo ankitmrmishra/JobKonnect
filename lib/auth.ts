@@ -28,8 +28,6 @@ export const authConfig = {
       token: JWT;
       account: Account | null;
     }): Promise<JWT> {
-      console.log("JWT callback - Token before:", token);
-
       // If the account exists (user is logging in for the first time)
       if (account) {
         const user = await db.user.findUnique({
@@ -43,7 +41,6 @@ export const authConfig = {
         }
       }
 
-      console.log("JWT callback - Token after:", token);
       return token;
     },
 
@@ -55,15 +52,12 @@ export const authConfig = {
       session: Session;
       token: JWT;
     }): Promise<CustomSession> {
-      console.log("Session callback - Token:", token);
-
       // Assign token UID and name to the session object
       if (session.user) {
         (session.user as CustomSession["user"]).uid = token.uid as string;
         session.user.name = token.name as string;
       }
 
-      console.log("Session callback - Session after assignment:", session);
       return session as CustomSession;
     },
 
@@ -89,8 +83,6 @@ export const authConfig = {
           },
         });
 
-        console.log("SignIn callback - User found in DB:", userDb);
-
         // If the user doesn't exist, create a new user in the database
         if (!userDb) {
           userDb = await db.user.create({
@@ -101,7 +93,6 @@ export const authConfig = {
               sub: account.providerAccountId,
             },
           });
-          console.log("SignIn callback - New user created:", userDb);
 
           // Automatically create a new profile for the user
           await db.profile.create({
@@ -117,10 +108,6 @@ export const authConfig = {
               Achievements: "",
             },
           });
-          console.log(
-            "SignIn callback - New profile created for user:",
-            userDb.id
-          );
         }
 
         return true; // Sign in successful

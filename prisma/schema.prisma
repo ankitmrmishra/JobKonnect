@@ -5,8 +5,7 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider        = "prisma-client-js"
-  previewFeatures = ["fullTextSearch"]
+  provider = "prisma-client-js"
 }
 
 datasource db {
@@ -36,32 +35,32 @@ model User {
 }
 
 model company {
-  id            String     @id @default(uuid())
-  companyName   String     @unique
+  id            String      @id @default(uuid())
+  companyName   String      @unique
   companyImage  String
   companyDetail String
   Jobdetails    JobDetail[]
 }
 
 model JobDetail {
-  id             String         @id @default(uuid())
+  id             String           @id @default(uuid())
   jobPosition    String
   description    String
   location       String
-  salary         Float
+  salary         Float?
   employmentType EmploymentType
   detail         String?
-  timeOfPosting  DateTime       @default(now())
+  timeOfPosting  DateTime         @default(now())
   companyemailId String
-  companyEmail   User           @relation(fields: [companyemailId], references: [id])
-  companyId      String         
-  companyName    company?       @relation(fields: [companyId], references: [companyName])
+  companyEmail   User             @relation(fields: [companyemailId], references: [id])
+  companyId      String
+  companyName    company?         @relation(fields: [companyId], references: [companyName])
   Jobapplication JobApplication[]
 }
 
 model Profile {
-  id                 String   @id @default(uuid())
-  user               User     @relation(fields: [id], references: [id])
+  id                 String           @id @default(uuid())
+  user               User             @relation(fields: [id], references: [id])
   name               String?
   email              String?
   phoneNumber        String?
@@ -72,18 +71,17 @@ model Profile {
   Skill              String?
   Education          String?
   Achievements       String?
-  JobApplications    JobApplication[] 
+  JobApplications    JobApplication[]
 }
 
-
-model JobApplication{
-  id            String         @id @default(uuid())
-  name          String
-  phoneNumber   String
-  coverLetter   String
-  resumeLink    String
-  profileId     String
-  Profile       Profile    @relation(fields: [profileId], references: [id])
-  JobdetailId   String
-  JobDetail      JobDetail  @relation(fields: [JobdetailId], references: [id])
+model JobApplication {
+  id          String    @id @default(uuid())
+  name        String
+  phoneNumber String
+  coverLetter String
+  resumeLink  String
+  profileId   String
+  Profile     Profile   @relation(fields: [profileId], references: [id])
+  JobdetailId String
+  JobDetail   JobDetail @relation(fields: [JobdetailId], references: [id])
 }

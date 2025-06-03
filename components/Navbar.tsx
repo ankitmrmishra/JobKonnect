@@ -1,6 +1,7 @@
 "use client";
 
 import { Workflow, Menu, X, MenuIcon } from "lucide-react";
+import { motion } from "framer-motion";
 import React, { useState } from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
 import Link from "next/link";
@@ -115,7 +116,7 @@ export default function Navbar() {
       </div>
 
       {isMenuOpen && (
-        <div className="md:hidden mt-4">
+        <motion.div className="md:hidden mt-4  ">
           <div className="flex flex-col space-y-2">
             <NavItem href="/GetHired" onClick={toggleMenu}>
               Find Jobs
@@ -154,7 +155,7 @@ export default function Navbar() {
               </Button>
             )}
           </div>
-        </div>
+        </motion.div>
       )}
     </nav>
   );

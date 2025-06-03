@@ -129,7 +129,7 @@ export default function AboutUs() {
                 variants={fadeIn}
                 className="text-center space-y-4"
               >
-                <div className="relative w-48 h-48 mx-auto overflow-hidden rounded-full">
+                <div className="relative size-32 md:size-48 mx-auto overflow-hidden rounded-full">
                   <Image
                     src={member.image}
                     alt={member.name}

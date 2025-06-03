@@ -32,16 +32,16 @@ export default function Hero() {
           </p>
         </div>
 
-        <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
+        <div className="flex  flex-row justify-center align-middle items-center gap-4 ">
           <Link
             href={"/GetHired"}
-            className="w-full sm:w-auto bg-white text-black hover:bg-white/90 px-4 py-2 rounded-md"
+            className="w-full sm:max-w-52  bg-white text-center text-black hover:bg-white/90 px-4 py-2 rounded-md"
           >
             Get Started
           </Link>
           <Link
             href={"PostAJob"}
-            className="text-white w-full sm:w-auto flex justify-between align-middle items-center hover:underline"
+            className="text-white w-full sm:max-w-52  flex justify-center align-middle items-center hover:underline"
           >
             Hire <ArrowRight className="w-4 h-4 ml-1" />
           </Link>
